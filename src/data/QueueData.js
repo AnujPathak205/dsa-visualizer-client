@@ -45,7 +45,8 @@ The person who comes first gets served first.
     }
   ],
 
-  code: `
+  code: {
+    java:`
 // Java Queue Example
 import java.util.Queue;
 import java.util.LinkedList;
@@ -58,6 +59,37 @@ queue.add(20);
 System.out.println(queue.remove()); // 10 (dequeue)
 System.out.println(queue.peek());   // 20
   `,
+  cpp:`
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main() {
+    queue<int> q;
+
+    q.push(10);   // enqueue
+    q.push(20);
+
+    cout << q.front() << endl; // 10 (dequeue element)
+    q.pop();                   // remove
+
+    cout << q.front() << endl; // 20 (peek)
+
+    return 0;
+}
+  `,
+  python:`
+from collections import deque
+
+queue = deque()
+
+queue.append(10)   # enqueue
+queue.append(20)
+
+print(queue.popleft())  # 10 (dequeue)
+print(queue[0])         # 20 (peek)
+  `
+  },
 
   realLifeExample: `
 Queue at a bus stop or ticket counter.

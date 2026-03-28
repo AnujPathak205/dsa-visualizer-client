@@ -26,13 +26,6 @@ You place a plate on top and remove from top.
     }
   ],
 
-  // complexity: {
-  //   push: "O(1)",
-  //   pop: "O(1)",
-  //   peek: "O(1)",
-  //   space: "O(n)"
-  // },
-
   complexity: [
     {
       opName:"push",
@@ -52,7 +45,8 @@ You place a plate on top and remove from top.
     }
   ]
 ,
-  code: `
+  code: {
+    java:`
 // Java Stack Example
 import java.util.Stack;
 
@@ -63,7 +57,30 @@ stack.push(20);
 
 System.out.println(stack.pop()); // 20
 System.out.println(stack.peek()); // 10
+    `,
+  cpp:`
+#include <iostream>
+using namespace std;
+
+class Stack {
+  int arr[100];
+  int top = -1;
+
+public:
+  void push(int x) {
+    arr[++top] = x;
+  }
+};
   `,
+  python:`
+class Stack:
+  def __init__(self):
+      self.stack = []
+
+  def push(self, x):
+      self.stack.append(x)
+  `
+  },
 
   realLifeExample: `  
 Stack of plates in a kitchen.

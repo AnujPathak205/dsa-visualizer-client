@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="bg-gray-900 text-white px-6 py-5 flex justify-between items-center shadow-md">
+    <nav className="bg-gradient-to-r from-slate-900 to-slate-700 text-white px-6 py-5 flex justify-between items-center shadow-md">
 
       {/* Logo / Title */}
       <h1 className="text-xl font-bold">
