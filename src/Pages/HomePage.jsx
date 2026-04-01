@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import bg from "../assets/BackgroundImg.png";
+import BubbleSortVisual from "../features/algorithm/sorting/BubbleSortVisual";
 
 import {
   Rocket,
@@ -14,7 +15,6 @@ import {
 export default function HomePage() {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-
       {/* Background */}
       <img
         src={bg}
@@ -34,7 +34,7 @@ export default function HomePage() {
           <span className="bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text">
             DSA Visually
           </span>{" "}
-          — Not Just Memorize It
+          — Not Just Memorize it
         </h1>
 
         {/* Subtext */}

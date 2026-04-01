@@ -1,111 +1,102 @@
-import { useState } from "react";
+import React from 'react'
+import { useState } from 'react'
 
-export default function Array({ initialData = [12,9,13,7] }) {
-  const [array, setArray] = useState(initialData);
-  const [value, setValue] = useState("");
-  const [index, setIndex] = useState("");
-  const [action, setAction] = useState("");
-  const [output, setOutput] = useState("");
+const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
-  const handleInsert = () => {
-    const idx = parseInt(index);
-    if (!value || isNaN(idx) || idx < 0 || idx > array.length) return;
-    const newArr = [...array];
-    newArr.splice(idx, 0, value);
-    setArray(newArr);
-    setAction("insert");
-    setOutput(`Value ${value} inserted at index ${idx}`);
-    setValue("");
-    setIndex("");
-  };
+export default function Array() {
 
-  const handleDelete = () => {
-    const idx = parseInt(index);
-    if (isNaN(idx) || idx < 0 || idx >= array.length) {
-      setOutput("Invalid index");
-      return;
-    }
-    const removed = array[idx];
-    const newArr = [...array];
-    newArr.splice(idx, 1);
-    setArray(newArr);
-    setAction("delete");
-    setOutput(`Value ${removed} deleted from index ${idx}`);
-    setIndex("");
-  };
 
-  const handleUpdate = () => {
-    const idx = parseInt(index);
-    if (!value || isNaN(idx) || idx < 0 || idx >= array.length) return;
-    const newArr = [...array];
-    newArr[idx] = value;
-    setArray(newArr);
-    setAction("update");
-    setOutput(`Value at index ${idx} updated to ${value}`);
-    setValue("");
-    setIndex("");
-  };
+  const initailArr = [
+    {id:0, value:12},
+    {id:1, value:5},
+    {id:2, value:1},
+    {id:3, value:7}
+  ]
 
-  const handleClear = () => {
-    setArray([]);
-    setAction("");
-    setOutput("Array cleared");
-  };
+  const [inputValue,setInputValue] = useState(22);
+  const [inputIndex,setInputIndex] = useState(1);
+  const [message,setMessage] = useState("Hello, visualize insertion, deletion and search in array");
 
+  const [array, setArray] = useState(initailArr);
+
+  const [speed,setSpeed] = useState(300);
+
+  async function handleInsertion(){
+    if(inputValue == "" || inputIndex == ""){
+      setMessage("Enter the value and the index for insertion");
+    };
+
+    // for(let i = array.length-1;i > inputIndex;i++){
+    //   // setArray(new Array(array));
+    //   // await sleep(speed);
+    // }
+
+    
+  }
+  
   return (
-    <section className="bg-white dark:bg-slate-900 
-        border border-gray-200 dark:border-slate-700
-        rounded-xl p-6 shadow-sm hover:shadow-md transition mt-6">
+    <>
 
-      <h2 className="text-xl font-semibold mb-4 
-          text-slate-900 dark:text-white flex items-center gap-2">
-        🎮 Array Visualizer
-      </h2>
-
-      {/* Controls */}
-      <div className="flex flex-col sm:flex-row gap-2 mb-4 flex-wrap">
-        <input
-          type="text"
-          placeholder="Value"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          className="border border-gray-300 dark:border-slate-600 rounded px-3 py-2 bg-gray-100 dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none flex-1 min-w-[80px]"
-        />
-        <input
-          type="number"
-          placeholder="Index"
-          value={index}
-          onChange={(e) => setIndex(e.target.value)}
-          className="border border-gray-300 dark:border-slate-600 rounded px-3 py-2 bg-gray-100 dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none min-w-[80px]"
-        />
-        <button className="bg-purple-400 dark:bg-purple-600 hover:bg-purple-500 dark:hover:bg-purple-700 text-white px-4 py-2 rounded transition font-semibold" onClick={handleInsert}>Insert</button>
-        <button className="bg-orange-400 dark:bg-orange-600 hover:bg-orange-500 dark:hover:bg-orange-700 text-white px-4 py-2 rounded transition font-semibold" onClick={handleDelete}>Delete</button>
-        <button className="bg-green-400 dark:bg-green-600 hover:bg-green-500 dark:hover:bg-green-700 text-white px-4 py-2 rounded transition font-semibold" onClick={handleUpdate}>Update</button>
-        <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition font-semibold" onClick={handleClear}>Clear</button>
+      <div className='p-8 ml-20 mt-10 border-1 text-black dark:text-white'>
+        {message}
       </div>
 
-      {/* Array Container */}
-      <div className="flex flex-wrap gap-3 min-h-[80px] border border-gray-300 dark:border-slate-600 rounded p-4 bg-gray-50 dark:bg-slate-800 transition">
-        {array.length === 0 && <p className="text-gray-500 dark:text-gray-400 italic flex-1 text-center">Array is empty</p>}
-        {array.map((item, idx) => {
-          let bgColor = "bg-pink-400 dark:bg-pink-500";
-          if (action === "insert" && idx === parseInt(index)) bgColor = "bg-green-400 dark:bg-green-500";
-          if (action === "delete" && idx === parseInt(index)) bgColor = "bg-yellow-400 dark:bg-yellow-500";
-          if (action === "update" && idx === parseInt(index)) bgColor = "bg-blue-400 dark:bg-blue-500";
-
-          return (
-            <div key={idx} className="flex flex-col items-center">
-              <div className={`min-w-[60px] h-12 flex items-center justify-center rounded-md text-white font-bold transition-all duration-300 ${bgColor}`}>
-                {item}
-              </div>
-              <span className="text-sm mt-1 text-slate-800 dark:text-slate-200">{idx}</span>
-            </div>
-          );
-        })}
+      <div className='flex gap-3 dark:text-white m-20'>
+        {array.map((element) => 
+        <div 
+          key={element.id}
+          className={`h-10 w-10 border-1 text-center
+            ${element.value == -1?'opacity-0':''}
+          `}
+        >
+          {element.value}
+        </div>
+        )}
       </div>
 
-      {/* Output */}
-      {output && <p className="mt-4 text-slate-800 dark:text-slate-100 font-medium">{output}</p>}
-    </section>
-  );
+      <div className='mt-10 ml-20'>
+        <label 
+          htmlFor="inputValue"
+          className='text-black dark:text-white mr-2 '
+        >
+          Enter value
+        </label>
+        <input
+         id='inputValue'
+         type='number' min={0} max={20}
+         value={inputValue}
+         className={`dark:text-white border border-gray-300 dark:border-slate-600 bg-gray-100 dark:bg-slate-700 text-slate-900 dark:text-white`}
+         onChange={(e) => setInputValue(e.target.value)}
+        />
+      </div>
+
+      <div className='mt-10 ml-20'>
+        <label 
+          htmlFor="inputIndex"
+          className='text-black dark:text-white mr-2 '
+        >
+          Enter index
+        </label>
+        <input
+        id='inputIndex'
+        type='number' min={0} max={20}
+        value={inputIndex}
+        className='dark:text-white border border-gray-300 dark:border-slate-600 bg-gray-100 dark:bg-slate-700 text-slate-900 dark:text-white'
+        onChange={(e) => setInputIndex(e.target.value)}
+        />
+      </div>
+
+      <button onClick={handleInsertion} className='bg-purple-400 dark:bg-purple-600 hover:bg-purple-500 dark:hover:bg-purple-700 text-white px-4 py-2 rounded transition font-semibold m-5'>Insert</button>
+      {/* <button onClick={handleDeletion} className='bg-purple-400 dark:bg-purple-600 hover:bg-purple-500 dark:hover:bg-purple-700 text-white px-4 py-2 rounded transition font-semibold m-5'>Delete</button>
+      <button onClick={handleSearch} className='bg-purple-400 dark:bg-purple-600 hover:bg-purple-500 dark:hover:bg-purple-700 text-white px-4 py-2 rounded transition font-semibold m-5'>Search</button> */}
+
+
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
+
+    </>
+  )
 }

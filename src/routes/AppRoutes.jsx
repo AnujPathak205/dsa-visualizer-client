@@ -6,6 +6,7 @@ import PageNotFoundPage from '../Pages/PageNotFoundPage';
 import TopicPageDS from '../Pages/TopicPageDS';
 import TopicPageAlgo from '../Pages/TopicPageAlgo';
 import SubTopicPageAlgo from '../Pages/SubTopicPageAlgo';
+import VisualPage from '../pages/VisualPage';
 
 export default function AppRoutes() {
   return (
@@ -25,6 +26,10 @@ export default function AppRoutes() {
 
             <Route path='/topics/data-structures/:topicId'
                    element={<TopicPageDS />}
+            />
+
+            <Route path='/topics/data-structures/:topicId/visual'
+                   element={<VisualPage />}
             />
             
             <Route path='/topics/algorithms'

@@ -11,11 +11,12 @@ import {
   Rocket
 } from "lucide-react";
 
-export default function TopicContent({ data, visual }) {
+import { Link } from "react-router-dom";
+
+export default function TopicContentDS({ data,visualPath}) {
   return (
     <>
       <Sitemap />
-
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-10 min-h-screen">
 
         {/* Title */}
@@ -123,7 +124,34 @@ export default function TopicContent({ data, visual }) {
 
         <hr id="Visual" className="mb-20 mt-20 dark:text-white" />
 
-        {visual}
+
+        <section className="bg-white dark:bg-slate-800 
+            border border-slate-200 dark:border-slate-700
+            rounded-xl p-6 shadow-sm hover:shadow-lg transition transform hover:-translate-y-1
+            flex flex-col items-center justify-center gap-4">
+
+          {/* Optional icon or emoji for visual cue */}
+          <div className="text-4xl">🖥️</div>
+
+          {/* Title */}
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 text-center">
+            Visualize Algorithm
+          </h2>
+
+          {/* Description */}
+          <p className="text-slate-600 dark:text-slate-400 text-sm text-center">
+            Step through your algorithm with real-time visualization.
+          </p>
+
+          {/* Link styled as a button */}
+          <Link
+            to={`/topics/data-structures/${visualPath}/visual`}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700
+              transition text-sm font-medium shadow-md"
+          >
+            Open Visual
+          </Link>
+        </section>
 
         <hr id="Code" className="mb-20 mt-20 dark:text-white" />
 

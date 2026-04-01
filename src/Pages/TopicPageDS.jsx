@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom' 
-import TopicContent from '../components/TopicContentDS'
+import TopicContentDS from '../components/TopicContentDS'
 
 import Array from '../features/data-structure/Array';
 import LinkedList from '../features/data-structure/LinkedList';
@@ -10,14 +10,13 @@ import {arrayData} from '../data/data-structure/ArrayData';
 import {linkedListData} from '../data/data-structure/LinkedListData';
 import {stackData} from '../data/data-structure/StackData';
 import {queueData} from '../data/data-structure/QueueData';
-import PageNotFoundPage from './PageNotFoundPage';
+import PageNotFoundPage from "./PageNotFoundPage";
 
 
 export default function TopicPageDS() {
   const {topicId} = useParams();
 
   const topics = ['array','linkedlist','stack','queue'];
-  const visuals = [<Array />,<LinkedList />,<Stack />,<Queue />];
   const data = [arrayData,linkedListData,stackData,queueData];
 
   const index = topics.indexOf(topicId);
@@ -28,7 +27,7 @@ export default function TopicPageDS() {
 
   return (
     <>
-      <TopicContent data={data[index]} visual={visuals[index]} />
+      <TopicContentDS data={data[index]} visualPath={topicId} />
     </>
   )
 }
