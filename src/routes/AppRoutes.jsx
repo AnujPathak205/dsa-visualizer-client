@@ -1,11 +1,11 @@
 import {Routes,Route} from 'react-router-dom'
-import HomePage from '../Pages/HomePage';
-import TopicListPage from '../Pages/TopicListPage';
-import AboutPage from '../Pages/AboutPage';
-import PageNotFoundPage from '../Pages/PageNotFoundPage';
-import TopicPageDS from '../Pages/TopicPageDS';
-import TopicPageAlgo from '../Pages/TopicPageAlgo';
-import SubTopicPageAlgo from '../Pages/SubTopicPageAlgo';
+import HomePage from '../pages/HomePage';
+import TopicListPage from '../pages/TopicListPage';
+import AboutPage from '../pages/AboutPage';
+import PageNotFoundPage from '../pages/PageNotFoundPage';
+import TopicPageDS from '../pages/TopicPageDS';
+import TopicPageAlgo from '../pages/TopicPageAlgo';
+import SubTopicPageAlgo from '../pages/SubTopicPageAlgo';
 import VisualPage from '../pages/VisualPage';
 
 export default function AppRoutes() {
