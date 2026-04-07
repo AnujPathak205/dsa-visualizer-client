@@ -26,7 +26,7 @@ export default function ArrayDisplay({array}) {
                 ${element.state === "found" ? "bg-green-500 text-white scale-110" : ""}
               `}
             >
-              {element.value}
+              {element.value != null?element.value:""}
             </motion.div>
             <div
             className="text-sm mt-1 text-gray-600 dark:text-gray-300">

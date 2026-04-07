@@ -78,45 +78,133 @@ print(arr[0])  # 10
     `},
 
     insertion:{
-      java:`int insert(int[] arr, int n, int capacity, int index, int value) {
-    if (n >= capacity) return n;                    // 1
-
-    for (int i = n - 1; i >= index; i--) {          // 2
-        arr[i + 1] = arr[i];                        // 3
+      java:`void insert(int[] arr, int n, int capacity, int pos, int value) {
+    // check overflow
+    if (n >= capacity) {
+        System.out.println("Insertion not possible (Array is full)");
+        return;
     }
 
-    arr[index] = value;                             // 4
-
-    return n + 1;                                   // 5
-}`,
-
-      cpp:`int insert(int arr[], int n, int capacity, int index, int value) {
-    if (n >= capacity) return n;                    // 1
-
-    for (int i = n - 1; i >= index; i--) {          // 2
-        arr[i + 1] = arr[i];                        // 3
+    // shift elements
+    for (int i = n - 1; i >= pos; i--) {
+        arr[i + 1] = arr[i];
     }
 
-    arr[index] = value;                             // 4
+    // insert value
+    arr[pos] = value;
+}
+`,
 
-    return n + 1;                                   // 5
+      cpp:`void insert(int arr[], int n, int capacity, int pos, int value) {
+    // check overflow
+    if (n >= capacity) {
+        cout << "Insertion not possible (Array is full)" << endl;
+        return;
+    }
+
+    // shift elements
+    for (int i = n - 1; i >= pos; i--) {
+        arr[i + 1] = arr[i];
+    }
+
+    // insert value
+    arr[pos] = value;
 }`,
-      python:`def insert(arr, n, capacity, index, value):
+      python:`def insert(arr, n, capacity, pos, value):
+    # check overflow
     if n >= capacity:
-        return n                                    # 1
+        print("Insertion not possible (Array is full)")
+        return
 
-    i = n - 1                                       # 2
-    while i >= index:
-        arr[i + 1] = arr[i]                         # 3
-        i -= 1
 
-    arr[index] = value                              # 4
+    # shift elements
+    for i in range(n - 1, pos - 1, -1):
+        arr[i + 1] = arr[i]
 
-    return n + 1                                    # 5`
+
+    # insert value
+    arr[pos] = value`
+    },
+
+    deletion:{
+      java:`void delete(int[] arr, int n, int capacity, int pos) {
+    // check underflow
+    if (n <= 0) {
+        System.out.println("Deletion not possible (Array is empty)");
+        return;
+    }
+
+    // shift elements left
+    for (int i = pos; i < n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    // optional: clear last element
+    arr[n - 1] = 0;
+    }`,
+        cpp:`void deleteElement(int arr[], int n, int capacity, int pos) {
+    // check underflow
+    if (n <= 0) {
+        cout << "Deletion not possible (Array is empty)" << endl;
+        return;
+    }
+
+    // shift elements left
+    for (int i = pos; i < n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    // optional: clear last element
+    arr[n - 1] = 0;
+}`,
+
+      python:`def delete(arr, n, capacity, pos):
+    # check underflow
+    if n <= 0:
+        print("Deletion not possible (Array is empty)")
+        return
+
+
+    # shift elements left
+    for i in range(pos, n - 1):
+        arr[i] = arr[i + 1]
+
+
+    # optional: clear last element
+    arr[n - 1] = 0`
+    },
+
+    search:{
+      java:`void search(int[] arr, int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            System.out.println("Element found at index: " + i);
+            return;
+        }
+    }
+    System.out.println("Element not found");
+    }
+`,    cpp:`void search(int arr[], int n, int capacity, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            cout << "Element found at index: " << i << endl;
+            return;
+        }
+    }
+    cout << "Element not found" << endl;
+}`,
+      python:`def search(arr, n, capacity, key):
+    for i in range(n):
+        if arr[i] == key:
+            print("Element found at index:", i)
+            return
+
+            
+
+    print("Element not found")`
     }
 
 
-    
   },
 
   realLifeExample: `

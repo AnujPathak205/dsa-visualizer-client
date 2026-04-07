@@ -1,3 +1,22 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+
+.icon-btn {
+  @apply flex items-center justify-center
+  w-8 h-8 rounded-lg
+  bg-slate-200 dark:bg-slate-700
+  text-slate-700 dark:text-slate-200
+  hover:bg-slate-300 dark:hover:bg-slate-600
+  active:scale-95 transition;
+}
+
+.icon-btn-sm {
+  @apply flex items-center justify-center
+  w-7 h-7 rounded-md
+  bg-slate-200 dark:bg-slate-700
+  text-slate-700 dark:text-slate-200
+  hover:bg-slate-300 dark:hover:bg-slate-600
+  active:scale-95 transition;
+}

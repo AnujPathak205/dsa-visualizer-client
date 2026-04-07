@@ -36,7 +36,7 @@ export default function Sitemap() {
   }, []);
 
   return (
-    <div className="sticky top-18 z-40 w-full">
+    <div className="sticky top-15 z-40 w-full">
       <div className="bg-white/80 dark:bg-slate-900/80 
                       backdrop-blur-md
                       border-b border-slate-200 dark:border-slate-700">

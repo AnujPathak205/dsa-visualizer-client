@@ -1,12 +1,22 @@
-import { useState } from 'react';
-import ArrayDisplay from './components/ArrayDisplay';
-import PlayerBar from '../../../components/PlayerBar';
-import { arrayData } from '../../../data/data-structure/ArrayData';
-import CodeVisual from '../../../components/CodeVisual';
+import { useEffect, useState } from "react";
+import ArrayDisplay from "./components/ArrayDisplay";
+import { arrayData } from "../../../data/data-structure/ArrayData";
+import CodeVisual from "../../../components/CodeVisual";
 
-import { handleInsertion } from './logic/insertion';
-import { handleDeletion } from './logic/deletion';
-import { handleSearch } from './logic/search';
+import { handleInsertion } from "./logic/insertion";
+import { handleDeletion } from "./logic/deletion";
+import { handleSearch } from "./logic/search";
+
+import {
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  RotateCcw,
+  X,
+} from "lucide-react";
+import { sleep } from "./logic/helperFunctions";
+import { steps } from "framer-motion";
 
 export default function Array() {
   const initialArr = [
@@ -14,22 +24,63 @@ export default function Array() {
     { id: 1, value: 5, state: "normal" },
     { id: 2, value: 1, state: "normal" },
     { id: 3, value: 7, state: "normal" },
-    { id: 4, value: 7, state: "normal" },
-    { id: 5, value: 7, state: "normal" },
-    { id: 6, value: 7, state: "normal" },
-    { id: 8, value: 7, state: "normal" }
+    { id: 4, value: null, state: "normal" },
+    { id: 5, value: null, state: "normal" },
+    { id: 6, value: null, state: "normal" },
+    { id: 7, value: null, state: "normal" },
+     { id: 8, value: null, state: "normal" },
+    // { id: 9, value: null, state: "normal" },
+    // { id: 10, value: null, state: "normal" },
+    // { id: 11, value: null, state: "normal" },
+    // { id: 12, value: null, state: "normal" },
+    // { id: 13, value: null, state: "normal" },
 
   ];
 
   const [array, setArray] = useState(initialArr);
+  const [stepArr, setStepArr] = useState([]);
   const [inputValue, setInputValue] = useState(22);
   const [inputIndex, setInputIndex] = useState(1);
-  const [message, setMessage] = useState("Hello, visualize insertion, deletion and search in array");
+  const [n,setN] = useState(4);
+  const [output,setOutput] = useState("");
+
+  const [operation, setOperation] = useState("none");
+
+
+  const [message, setMessage] = useState(
+    "Choose an operation to start visualization"
+  );
+
   const [tasking, setTasking] = useState(false);
-  const [currentLine, setCurrentLine] = useState(1);
-  const [speed, setSpeed] = useState(1100);
+  const [currentLine, setCurrentLine] = useState(-1);
+
+  const [speed, setSpeed] = useState(1000);
   const [step, setStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    if (step >= stepArr.length) return;
+
+    const timer = setTimeout(() => {
+      setArray(stepArr[step]);
+      setStep((prev) => prev + 1);
+    }, speed);
+
+    return () => clearTimeout(timer);
+  },[step, stepArr]);
+
+  function onQuit(){
+
+  }
+
+
+
+  // totalSteps,
+
+  const isDisabled = tasking;
+
+  const totalSteps =
+    arrayData.code[operation]?.java?.split("\n").length || 1;
 
   return (
     <div className="h-screen flex flex-col bg-gray-100 dark:bg-slate-900">
@@ -37,108 +88,261 @@ export default function Array() {
       {/* 🔥 MAIN CONTENT */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 overflow-hidden">
 
-        {/* LEFT: ARRAY VISUAL */}
-        <div className="flex flex-col justify-center items-center bg-white dark:bg-slate-800 rounded-xl shadow p-3 overflow-hidden">
-          
+        {/* 🔹 LEFT */}
+        <div className="flex flex-col justify-center items-center bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4">
+
           <ArrayDisplay array={array} />
 
-          {/* Message */}
-          <div className="mt-2 w-full text-center px-4 py-2 rounded-lg bg-blue-100 dark:bg-slate-700 text-blue-800 dark:text-blue-300 text-sm">
+          <div className="mt-4 w-full text-center px-4 py-2 rounded-lg 
+            bg-blue-100 dark:bg-slate-700 
+            text-blue-800 dark:text-blue-300 text-sm">
             {message}
           </div>
-
+          <div>{output.length != 0 && output}</div>
         </div>
 
-        {/* RIGHT: CONTROLS + CODE */}
+        {/* 🔹 RIGHT */}
         <div className="flex flex-col gap-4 overflow-hidden">
 
-          
+          {/* 🔥 CODE / INTRO */}
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 flex-1 overflow-auto">
 
-          {/* 🔥 CODE BLOCK (takes remaining height) */}
-          <div className=" bg-white dark:bg-slate-800 rounded-xl shadow p-2 overflow-auto">
-            <CodeVisual code={arrayData.code.insertion} />
+            {operation !== "none" ? (
+              <CodeVisual
+                code={arrayData.code[operation]}
+                currentLine={currentLine}
+              />
+            ) : (
+              <div className="h-full flex flex-col justify-center items-center text-center px-6">
+                <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-3">
+                  Array Visualizer
+                </h1>
+
+                <p className="text-slate-600 dark:text-slate-300 max-w-md">
+                  Visualize how arrays work internally. Observe
+                  <span className="text-green-500 font-semibold"> insertion</span>,
+                  <span className="text-red-500 font-semibold"> deletion</span>, and
+                  <span className="text-purple-500 font-semibold"> search </span> 
+                  step by step.
+                </p>
+
+                <p className="text-xs text-slate-400 mt-3">
+                  Select an operation to begin 🚀
+                </p>
+              </div>
+            )}
           </div>
 
-          {/* 🔥 INPUT + BUTTONS */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow p-4 flex flex-col gap-4">
+          {/* 🔥 CONTROLS */}
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 flex flex-col gap-4">
 
-            {/* Inputs */}
-            <div className="flex gap-4">
-              <input
-                type="number"
-                value={inputValue}
-                onChange={(e) => !tasking && setInputValue(Number(e.target.value))}
-                placeholder="Value"
-                className="w-1/2 px-3 py-2 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-400"
-              />
+            {operation !== "none" && !tasking && (
+              <button
+                onClick={() => setOperation("none")}
+                className="w-fit px-3 py-1 rounded bg-slate-500 text-white hover:bg-slate-600"
+              >
+                ← Back
+              </button>
+            )}
 
-              <input
-                type="number"
-                value={inputIndex}
-                onChange={(e) => !tasking && setInputIndex(Number(e.target.value))}
-                placeholder="Index"
-                className="w-1/2 px-3 py-2 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-400"
-              />
+            <h2 className="text-lg font-semibold text-slate-800 dark:text-white">
+              {operation === "none"
+                ? "Choose Operation"
+                : `Operation: ${operation}`}
+                 &nbsp; (capacity = {array.length} , n = {n})
+            </h2>
+
+            
+
+            {/* INPUTS */}
+            <div className="flex gap-6 flex-wrap">
+
+              {(operation === "insertion" || operation === "search") && (
+                <div>
+                  <label className="text-xs text-slate-500 dark:text-slate-400">
+                    Input Value &nbsp;
+                  </label>
+                  <input
+                    type="number"
+                    value={inputValue}
+                    disabled={isDisabled}
+                    onChange={(e) => setInputValue(Number(e.target.value))}
+                    className="w-28 px-3 py-2 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white
+                    disabled:opacity-50"
+                  />
+                </div>
+              )}
+
+              {(operation === "insertion" || operation === "deletion") && (
+                <div>
+                  <label className="text-xs text-slate-500 dark:text-slate-400">
+                    Target Index &nbsp;
+                  </label>
+                  <input
+                    type="number"
+                    value={inputIndex}
+                    disabled={isDisabled}
+                    onChange={(e) => setInputIndex(Number(e.target.value))}
+                    className="w-28 px-3 py-2 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white
+                    disabled:opacity-50"
+                  />
+                </div>
+              )}
             </div>
 
-            {/* Buttons */}
-            <div className="flex gap-3 flex-wrap">
-
+            {/* BUTTONS */}
+            {operation === "none" ? (
+              <div className="flex gap-3">
+                <button onClick={() => setOperation("insertion")} className="flex-1 py-2 bg-green-500 text-white rounded-lg">
+                  Insertion
+                </button>
+                <button onClick={() => setOperation("deletion")} className="flex-1 py-2 bg-red-500 text-white rounded-lg">
+                  Deletion
+                </button>
+                <button onClick={() => setOperation("search")} className="flex-1 py-2 bg-purple-500 text-white rounded-lg">
+                  Search
+                </button>
+              </div>
+            ) : (
               <button
-                onClick={handleInsertion}
-                disabled={tasking}
-                className={`flex-1 px-4 py-2 rounded-lg font-medium transition
-                  ${tasking
-                    ? "bg-gray-400 text-white"
-                    : "bg-purple-500 hover:bg-purple-600 text-white"}
-                `}
+                onClick={() => {
+                  if (operation === "insertion") return handleInsertion(array,setArray,setStepArr,n,setN,inputIndex,inputValue,setMessage,setTasking,speed,setCurrentLine,setOutput);
+                  if (operation === "deletion")
+                    return handleDeletion(array, setArray, inputIndex, setMessage, setTasking, speed);
+                  if (operation === "search")
+                    return handleSearch(array, setArray, inputValue, setMessage, setTasking, speed);
+                }}
+                disabled={isDisabled}
+                className={`w-full py-2 rounded-lg text-white ${
+                  isDisabled ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
+                }`}
               >
-                Insert
+                {isDisabled ? "Running..." : "Start Visualization"}
               </button>
-
-              <button
-                onClick={() =>
-                  handleDeletion(array, setArray, inputIndex, setMessage, setTasking, speed)
-                }
-                disabled={tasking}
-                className={`flex-1 px-4 py-2 rounded-lg font-medium transition
-                  ${tasking
-                    ? "bg-gray-400 text-white"
-                    : "bg-red-500 hover:bg-red-600 text-white"}
-                `}
-              >
-                Delete
-              </button>
-
-              <button
-                onClick={() =>
-                  handleSearch(array, setArray, inputValue, setMessage, setTasking, speed)
-                }
-                disabled={tasking}
-                className={`flex-1 px-4 py-2 rounded-lg font-medium transition
-                  ${tasking
-                    ? "bg-gray-400 text-white"
-                    : "bg-blue-500 hover:bg-blue-600 text-white"}
-                `}
-              >
-                Search
-              </button>
-            </div>
+            )}
           </div>
-
         </div>
       </div>
 
-      {/* 🔥 PLAYER BAR (fixed bottom already) */}
-      <PlayerBar
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-        totalSteps={2}
-        step={step}
-        setStep={setStep}
-        speed={speed}
-        setSpeed={setSpeed}
+      {/* 🔥 PLAYER BAR (SLIM & COMPACT FOR ALL SCREENS) */}
+<div className="
+  border-t border-slate-200/70 dark:border-slate-700/60
+  bg-white/80 dark:bg-slate-900/80
+  backdrop-blur-md
+  px-3 py-2
+">
+
+  {/* 🔹 Progress Bar */}
+  <input
+    type="range"
+    min={0}
+    max={Math.max(totalSteps - 1, 0)}
+    value={step}
+    onChange={(e) => {
+      setIsPlaying(false);
+      setStep(Number(e.target.value));
+    }}
+    className="
+      w-full h-1 rounded-lg appearance-none cursor-pointer
+      bg-slate-300 dark:bg-slate-700
+      accent-indigo-500 mb-2
+    "
+  />
+
+  {/* 🔹 Controls Row (Single Line Always) */}
+  <div className="flex items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-300">
+
+    {/* 🔸 LEFT: Speed */}
+    <div className="flex items-center gap-2 min-w-[90px]">
+      <span className="text-[11px] whitespace-nowrap">
+        {(2000 / speed).toFixed(1)}x
+      </span>
+
+      <input
+        type="range"
+        min={200}
+        max={2000}
+        step={100}
+        value={speed}
+        onChange={(e) => setSpeed(Number(e.target.value))}
+        className="
+          w-16 h-1 rounded-lg appearance-none cursor-pointer
+          bg-slate-300 dark:bg-slate-700
+          accent-indigo-500
+        "
       />
+    </div>
+
+    {/* 🔸 CENTER: Controls */}
+    <div className="flex items-center gap-1">
+
+      <button
+        onClick={() => {
+          setIsPlaying(false);
+          setStep(0);
+        }}
+        className="icon-btn-sm"
+      >
+        <RotateCcw size={14} />
+      </button>
+
+      <button
+        onClick={() => {
+          setIsPlaying(false);
+          setStep((s) => Math.max(s - 1, 0));
+        }}
+        className="icon-btn-sm"
+      >
+        <SkipBack size={14} />
+      </button>
+
+      <button
+        onClick={() => setIsPlaying((p) => !p)}
+        className="
+          flex items-center justify-center
+          w-8 h-8 rounded-full
+          bg-indigo-500 text-white
+          hover:bg-indigo-600 active:scale-95
+          transition
+        "
+      >
+        {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+      </button>
+
+      <button
+        onClick={() => {
+          setIsPlaying(false);
+          setStep((s) =>
+            Math.min(s + 1, totalSteps - 1)
+          );
+        }}
+        className="icon-btn-sm"
+      >
+        <SkipForward size={14} />
+      </button>
+    </div>
+
+    {/* 🔸 RIGHT: Step + Close */}
+    <div className="flex items-center gap-2 min-w-[80px] justify-end">
+
+      <span className="text-[11px] whitespace-nowrap">
+        {step + 1}/{totalSteps}
+      </span>
+
+      <button
+        className="
+          flex items-center justify-center
+          w-7 h-7 rounded-md
+          bg-slate-200 dark:bg-slate-700
+          hover:bg-red-500 hover:text-white
+          transition
+        "
+      >
+        <X size={14} />
+      </button>
+    </div>
+  </div>
+</div>
     </div>
   );
 }

@@ -1,11 +1,4 @@
-import {
-  Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-  RotateCcw,
-  X
-} from "lucide-react";
+
 
 export default function PlayerBar({
   isPlaying,
