@@ -41,6 +41,7 @@ export default function Array() {
   const [inputIndex, setInputIndex] = useState(1);
   const [n,setN] = useState(4);
   const [output,setOutput] = useState("");
+  const [outputValue,setOutputValue] = useState("");
 
   const [operation, setOperation] = useState("none");
 
@@ -64,6 +65,11 @@ export default function Array() {
         return;
       }
 
+      if(step == stepArr.length-1){
+        setOutputValue(output);
+        setTimeout(() => setOutputValue(""),5000);
+      }
+
       const timer = setTimeout(() => {
         setArray(stepArr[step]);
         setCurrentLine(currentLineArr[step]);
@@ -77,19 +83,27 @@ export default function Array() {
   },[step, stepArr,isPlaying]);
 
   function onQuit(){
-    if(stepArr.length) setArray([...stepArr[0]]);
-    setN(prev => prev-1);
+    if(stepArr.length){ 
+      setArray([...stepArr[0]])
+      setStepArr([]);
+      if(operation == "insertion") setN(prev => prev-1);
+      if(operation == "deletion") setN(prev => prev+1);
+    };
+    setCurrentLine(-1);
+    setOutput("");
   }
 
-  const handleStartInsert = () => {
+  const handleStart = () => {
     setIsPlaying(true);
-    if(stepArr.length) setArray(stepArr[stepArr.length-1]);
+    setOutput("");
+    const ARRAY = stepArr.length? [...stepArr[stepArr.length-1]]: [...array];
+
     if (operation === "insertion") 
-      return handleInsertion(array,setArray,stepArr,setStepArr,n,setN,inputIndex,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+      return handleInsertion(ARRAY,setArray,stepArr,setStepArr,n,setN,inputIndex,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr);
     if (operation === "deletion")
-      return handleDeletion(array,setArray,stepArr,setStepArr,n,setN,inputIndex,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+      return handleDeletion(ARRAY,setArray,stepArr,setStepArr,n,setN,inputIndex,setOutput,setCurrentLineArr,setMessage,setMessageArr);
     if (operation === "search")
-      return handleSearch(array, setArray, inputValue, setMessage, setTasking, speed);
+      return handleSearch(ARRAY,setArray,stepArr,setStepArr,n,setN,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr);
   }
 
   const isDisabled = isPlaying;
@@ -112,7 +126,39 @@ export default function Array() {
             text-blue-800 dark:text-blue-300 text-sm">
             {message}
           </div>
-          <div>{output.length != 0 && output}</div>
+          {outputValue.length !== 0 && (
+            <div className="
+              mt-2 w-full
+              rounded-xl
+              border border-slate-300 dark:border-slate-600
+              bg-slate-50 dark:bg-slate-900
+              shadow-inner
+              overflow-hidden
+            ">
+              
+              <div className="
+                px-2 py-2
+                bg-slate-200 dark:bg-slate-800
+                border-b border-slate-300 dark:border-slate-600
+                text-xs font-semibold
+                text-slate-700 dark:text-slate-300
+                tracking-wide
+              ">
+                OUTPUT
+              </div>
+
+              {/* Content */}
+              <div className="
+                px-4 py-2
+                text-center
+                text-lg font-mono
+                text-slate-900 dark:text-slate-100
+              ">
+                {outputValue}
+              </div>
+
+            </div>
+          )}
         </div>
 
         {/* 🔹 RIGHT */}
@@ -152,8 +198,13 @@ export default function Array() {
 
             {operation !== "none" && !tasking && (
               <button
+                disabled={isDisabled}
                 onClick={() => setOperation("none")}
-                className="w-fit px-3 py-1 rounded bg-slate-500 text-white hover:bg-slate-600"
+                className={`w-fit px-3 py-1 rounded  text-white 
+                  ${
+                    isDisabled ? "bg-gray-400" : "bg-slate-500 hover:bg-slate-600"
+                  }    
+                `}
               >
                 ← Back
               </button>
@@ -207,19 +258,19 @@ export default function Array() {
             {/* BUTTONS */}
             {operation === "none" ? (
               <div className="flex gap-3">
-                <button onClick={() => setOperation("insertion")} className="flex-1 py-2 bg-green-500 text-white rounded-lg">
+                <button onClick={() => {setOperation("insertion"),setCurrentLine(-1)}} className="flex-1 py-2 bg-green-500 text-white rounded-lg">
                   Insertion
                 </button>
-                <button onClick={() => setOperation("deletion")} className="flex-1 py-2 bg-red-500 text-white rounded-lg">
+                <button onClick={() => {setOperation("deletion"),setCurrentLine(-1)}} className="flex-1 py-2 bg-red-500 text-white rounded-lg">
                   Deletion
                 </button>
-                <button onClick={() => setOperation("search")} className="flex-1 py-2 bg-purple-500 text-white rounded-lg">
+                <button onClick={() => {setOperation("search"),setCurrentLine(-1)}} className="flex-1 py-2 bg-purple-500 text-white rounded-lg">
                   Search
                 </button>
               </div>
             ) : (
               <button
-                onClick={handleStartInsert}
+                onClick={handleStart}
                 disabled={isDisabled}
                 className={`w-full py-2 rounded-lg text-white ${
                   isDisabled ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"

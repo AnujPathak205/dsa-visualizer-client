@@ -8,9 +8,12 @@ function generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput) {
     const capacity = array.length;
     let newArr = [...array];
 
+    steps.push([...newArr]);
+    lines.push(1);
+    messages.push(false);
+
     if(n >= capacity || inputIndex < 0 || inputIndex > n){
       setOutput("Insertion not possible");
-      setTimeout(() => {setOutput("")},5000);
       steps.push([...newArr]);
       steps.push([...newArr]);
       steps.push([...newArr]);
@@ -19,7 +22,7 @@ function generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput) {
       lines.push(5);
       messages.push(false);
       messages.push(false);
-      messages.push("insertion not possible");
+      messages.push("insertion is not possible here,check input index");
       return {stepsArr:steps,linesArr:lines,messagesArr:messages};
     }
 

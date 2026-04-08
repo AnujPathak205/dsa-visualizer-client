@@ -182,8 +182,9 @@ print(arr[0])  # 10
             return;
         }
     }
+
     System.out.println("Element not found");
-    }
+}
 `,    cpp:`void search(int arr[], int n, int capacity, int key) {
     for (int i = 0; i < n; i++) {
         if (arr[i] == key) {
@@ -191,6 +192,7 @@ print(arr[0])  # 10
             return;
         }
     }
+        
     cout << "Element not found" << endl;
 }`,
       python:`def search(arr, n, capacity, key):

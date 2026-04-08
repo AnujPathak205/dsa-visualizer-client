@@ -7,9 +7,12 @@ function generateDeletionSteps(array,n,setN,inputIndex,setOutput) {
     const capacity = array.length;
     let newArr = [...array];
 
+    steps.push([...newArr]);
+    lines.push(1);
+    messages.push(false);
+
     if(n <= 0|| inputIndex < 0 || inputIndex >= n){
       setOutput("Deletion not possible");
-      setTimeout(() => {setOutput("")},5000);
       steps.push([...newArr]);
       steps.push([...newArr]);
       steps.push([...newArr]);
@@ -50,6 +53,10 @@ function generateDeletionSteps(array,n,setN,inputIndex,setOutput) {
     lines.push(9);
     messages.push(false);
    }
+
+    steps.push([...newArr]);
+    lines.push(14);
+    messages.push(false);
 
     setN(prev => prev-1);
 
