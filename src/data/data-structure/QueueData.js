@@ -46,6 +46,7 @@ The person who comes first gets served first.
   ],
 
   code: {
+    basic:{
     java:`
 // Java Queue Example
 import java.util.Queue;
@@ -89,7 +90,9 @@ queue.append(20)
 print(queue.popleft())  # 10 (dequeue)
 print(queue[0])         # 20 (peek)
   `
-  },
+  }
+  
+},
 
   realLifeExample: `
 Queue at a bus stop or ticket counter.

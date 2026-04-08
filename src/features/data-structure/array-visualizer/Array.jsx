@@ -79,6 +79,23 @@ export default function Array() {
 
 
       return () => clearTimeout(timer);
+    }else{
+      if(step == 0) return;
+
+      if (step >= stepArr.length){ 
+        setStep(0);
+        setIsPlaying(false);
+        return;
+      }
+
+      if(step == stepArr.length-1){
+        setOutputValue(output);
+        setTimeout(() => setOutputValue(""),5000);
+      }
+
+        setArray(stepArr[step]);
+        setCurrentLine(currentLineArr[step]);
+        if(messageArr[step]) setMessage(messageArr[step]);
     }
   },[step, stepArr,isPlaying]);
 

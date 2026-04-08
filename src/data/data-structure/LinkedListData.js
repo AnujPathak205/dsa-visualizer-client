@@ -51,6 +51,7 @@ Types:
   ],
 
   code: {
+    basic:{
     java: `
 // Java LinkedList Example
 class Node {
@@ -87,6 +88,7 @@ class Node:
         self.data = data
         self.next = None
     `
+  }
   },
 
   realLifeExample: `
