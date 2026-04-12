@@ -19,69 +19,62 @@ export default function TopicContentDS({ data, visualPath }) {
     <>
       <Sitemap />
 
-      <div className="max-w-4xl mx-auto px-4 py-10 space-y-12 min-h-screen">
+      <div className="max-w-6xl mx-auto px-6 py-12 space-y-14 min-h-screen">
 
         {/* 🔥 TITLE */}
-        <div className="text-center space-y-3">
-          <h1 className="text-4xl font-bold text-slate-800 dark:text-white">
+        <div id="Description" className="text-center space-y-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white">
             {data.title}
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+
+          <p className="text-slate-500 dark:text-slate-400 max-w-3xl mx-auto text-lg">
             {data.description}
           </p>
         </div>
 
         {/* 🔥 MERGED CONCEPT BOX */}
         <section
-          className="rounded-2xl p-6 md:p-8 
+          className="rounded-2xl p-8 md:p-10 
           bg-white/80 dark:bg-slate-800/70 
           backdrop-blur-md
           border border-slate-200 dark:border-slate-700
-          shadow-md space-y-8"
+          shadow-md space-y-10"
         >
           {/* Header */}
-          <div className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white">
-            <BookOpen className="w-5 h-5 text-indigo-500" />
+          <div className="flex items-center gap-3 text-2xl font-semibold text-slate-800 dark:text-white">
+            <BookOpen className="w-6 h-6 text-indigo-500" />
             Concept Overview
           </div>
 
-          {/* 🔹 Explanation */}
-          <div>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
-              {data.explanation}
-            </p>
-          </div>
+          {/* Explanation */}
+          <p className="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line text-[15px] md:text-base">
+            {data.explanation}
+          </p>
 
           <div className="border-t border-slate-200 dark:border-slate-700" />
 
-          {/* 🔹 Operations */}
+          {/* Operations */}
           <div>
-            <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-white mb-3">
-              <Settings className="w-4 h-4 text-indigo-500" />
+            <h3 className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white mb-4">
+              <Settings className="w-5 h-5 text-indigo-500" />
               Key Operations
             </h3>
 
-            <div className="grid gap-3">
+            <div className="grid md:grid-cols-2 gap-4">
               {data.operations.map((op, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-3 p-3 rounded-lg 
+                  className="p-4 rounded-xl 
                   bg-slate-50 dark:bg-slate-900/50
                   border border-slate-200 dark:border-slate-700
                   hover:shadow-sm transition"
                 >
-                  <span className="text-indigo-500 font-semibold">
-                    {index + 1}.
-                  </span>
-
-                  <div>
-                    <p className="font-medium text-slate-800 dark:text-white">
-                      {op.name}
-                    </p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                      {op.description}
-                    </p>
-                  </div>
+                  <p className="font-semibold text-slate-800 dark:text-white">
+                    {op.name}
+                  </p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    {op.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -89,22 +82,22 @@ export default function TopicContentDS({ data, visualPath }) {
 
           <div className="border-t border-slate-200 dark:border-slate-700" />
 
-          {/* 🔹 Complexity + Real Life */}
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Complexity + Real Life */}
+          <div className="grid md:grid-cols-2 gap-8">
 
             {/* Time Complexity */}
             <div>
-              <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-white mb-3">
-                <Clock className="w-4 h-4 text-indigo-500" />
+              <h3 className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white mb-4">
+                <Clock className="w-5 h-5 text-indigo-500" />
                 Time Complexity
               </h3>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {data.complexity.map((op, index) => (
                   <div
                     key={index}
                     className="flex justify-between items-center 
-                    px-3 py-2 rounded-lg
+                    px-4 py-3 rounded-lg
                     bg-indigo-50 dark:bg-indigo-900/30
                     border border-indigo-100 dark:border-indigo-800
                     text-sm"
@@ -122,14 +115,14 @@ export default function TopicContentDS({ data, visualPath }) {
             </div>
 
             {/* Real Life */}
-            <div>
-              <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-white mb-3">
-                <Globe className="w-4 h-4 text-indigo-500" />
+            <div id="Visual">
+              <h3 className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white mb-4">
+                <Globe className="w-5 h-5 text-indigo-500" />
                 Real-Life Use
               </h3>
 
               <div
-                className="p-4 rounded-lg 
+                className="p-5 rounded-xl 
                 bg-slate-50 dark:bg-slate-900/50
                 border border-slate-200 dark:border-slate-700
                 text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
@@ -142,23 +135,24 @@ export default function TopicContentDS({ data, visualPath }) {
         </section>
 
         {/* 🔥 VISUAL CTA */}
-        <section className="rounded-2xl p-6 text-center 
+        <section className="rounded-2xl p-8 text-center 
           bg-gradient-to-r from-indigo-500 to-indigo-600 
           text-white shadow-lg">
 
-          <PlayCircle className="mx-auto mb-3 w-8 h-8" />
+          <PlayCircle className="mx-auto mb-4 w-9 h-9" />
 
-          <h2 className="text-xl font-semibold mb-2">
+          <h2 className="text-2xl font-semibold mb-2">
             Visualize This Concept
           </h2>
 
-          <p className="text-sm opacity-90 mb-4">
+          <p className="text-sm opacity-90 mb-5">
             Watch step-by-step execution and understand deeply
           </p>
 
           <Link
+            id="Code"
             to={`/topics/data-structures/${visualPath}/visual`}
-            className="inline-block px-5 py-2 rounded-lg 
+            className="inline-block px-6 py-2 rounded-lg 
             bg-white text-indigo-600 font-medium 
             hover:bg-gray-100 transition"
           >
@@ -167,23 +161,23 @@ export default function TopicContentDS({ data, visualPath }) {
         </section>
 
         {/* 🔥 CODE */}
-        <section>
+        <section id="Questions">
           <Code code={data.code.basic} />
         </section>
 
         {/* 🔥 QUESTIONS */}
-        <section className="space-y-4">
+        <section className="space-y-5">
           <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white">
             <Brain className="w-5 h-5 text-indigo-500" />
             Practice Questions
           </h2>
 
           {data.questions.map((q, index) => (
-            <div key={index} className="border-l-4 border-indigo-500 pl-4">
+            <div key={index} className="border-l-4 border-indigo-500 pl-5">
               <p className="font-medium text-slate-800 dark:text-white">
                 {q.question}
               </p>
-              <p className="text-slate-500 dark:text-slate-300">
+              <p id="Quiz" className="text-slate-500 dark:text-slate-300">
                 👉 {q.answer}
               </p>
             </div>
@@ -194,7 +188,7 @@ export default function TopicContentDS({ data, visualPath }) {
         <Quiz questions={data.quiz} />
 
         {/* 🔥 PRACTICE LINKS */}
-        <section className="space-y-4">
+        <section className="space-y-5">
           <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white">
             <Rocket className="w-5 h-5 text-indigo-500" />
             Practice Problems
@@ -207,7 +201,7 @@ export default function TopicContentDS({ data, visualPath }) {
               target="_blank"
               rel="noreferrer"
               className="flex justify-between items-center 
-              p-4 rounded-lg border 
+              p-5 rounded-xl border 
               bg-slate-50 dark:bg-slate-800
               hover:bg-indigo-50 dark:hover:bg-slate-700 transition"
             >

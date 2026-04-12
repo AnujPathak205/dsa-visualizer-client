@@ -6,28 +6,40 @@ export default function Navbar({ dark, setDark }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 border-b 
+    <nav
+      className="sticky top-0 z-50 border-b 
       border-slate-200 dark:border-slate-800 
-      bg-white dark:bg-slate-950">
+      bg-white dark:bg-slate-950"
+    >
+      {/*  MAIN BAR */}
+      <div className="w-full px-4 md:px-6 py-4 flex justify-between items-center">
 
-      <div className="max-w-6xl mx-auto px-5 py-3 flex justify-between items-center">
-
-        {/* Logo */}
-        <h1 className="text-lg md:text-xl font-bold 
+        {/* LEFT: Logo */}
+        <h1
+          className="text-xl md:text-2xl font-bold 
           text-indigo-600 dark:text-indigo-400 
-          hover:scale-105 transition cursor-pointer">
+          hover:scale-105 transition cursor-pointer"
+        >
           DSA Visualizer
         </h1>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+        {/* RIGHT: Desktop */}
+        <div className="hidden md:flex items-center gap-10 text-base md:text-lg font-medium">
 
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/topics" className="nav-link">Topics</Link>
-          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+
+          <Link to="/topics" className="nav-link">
+            Topics
+          </Link>
+
+          <Link to="/about" className="nav-link">
+            About
+          </Link>
 
           <button
-            onClick={() => setDark(prev => !prev)}
+            onClick={() => setDark((prev) => !prev)}
             className="p-2 rounded-lg 
               bg-slate-100 dark:bg-slate-800
               hover:bg-indigo-100 dark:hover:bg-indigo-900
@@ -41,7 +53,7 @@ export default function Navbar({ dark, setDark }) {
           </button>
         </div>
 
-        {/* Mobile Button */}
+        {/* MOBILE BUTTON (unchanged) */}
         <button
           onClick={() => setMenuOpen(true)}
           className="md:hidden p-2 rounded-lg 
@@ -53,16 +65,18 @@ export default function Navbar({ dark, setDark }) {
         </button>
       </div>
 
-      {/* Mobile Bottom Sheet */}
+      {/* 🔥 MOBILE MENU (UNCHANGED) */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 flex items-end 
-          bg-black/60 backdrop-blur-sm">
-
-          <div className="w-full 
+        <div
+          className="fixed inset-0 z-50 flex items-end 
+          bg-black/60 backdrop-blur-sm"
+        >
+          <div
+            className="w-full 
             bg-white dark:bg-slate-900 
             border-t border-slate-200 dark:border-slate-700
-            rounded-t-2xl p-6 animate-slideUp shadow-2xl">
-
+            rounded-t-2xl p-6 animate-slideUp shadow-2xl"
+          >
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="font-semibold text-slate-800 dark:text-white">
@@ -95,7 +109,7 @@ export default function Navbar({ dark, setDark }) {
 
               {/* Dark Mode Toggle */}
               <button
-                onClick={() => setDark(prev => !prev)}
+                onClick={() => setDark((prev) => !prev)}
                 className="flex items-center gap-3 mt-4 px-4 py-3 rounded-xl 
                   bg-slate-100 dark:bg-slate-800
                   text-slate-800 dark:text-slate-200
@@ -119,9 +133,8 @@ export default function Navbar({ dark, setDark }) {
         </div>
       )}
 
-      {/* Styles */}
+      {/* 🔥 STYLES */}
       <style>{`
-        /* Desktop Links */
         .nav-link {
           position: relative;
           color: #475569;
@@ -150,7 +163,6 @@ export default function Navbar({ dark, setDark }) {
           color: #cbd5f5;
         }
 
-        /* Mobile Links - FIXED DARK MODE */
         .mobile-link {
           padding: 14px 16px;
           border-radius: 12px;
@@ -166,7 +178,7 @@ export default function Navbar({ dark, setDark }) {
 
         .dark .mobile-link {
           color: #e2e8f0;
-          background: #0f172a; /* deeper surface */
+          background: #0f172a;
           border: 1px solid #1e293b;
         }
 
@@ -174,7 +186,6 @@ export default function Navbar({ dark, setDark }) {
           background: #1e293b;
         }
 
-        /* Animation */
         @keyframes slideUp {
           from {
             transform: translateY(100%);
