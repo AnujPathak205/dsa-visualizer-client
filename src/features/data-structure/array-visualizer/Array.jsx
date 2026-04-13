@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ArrayDisplay from "./components/ArrayDisplay";
 import { arrayData } from "../../../data/data-structure/ArrayData";
 import CodeVisual from "../../../components/CodeVisual";
+import PlayBar from "../../../components/PlayBar";
 
 import { handleInsertion } from "./logic/insertion";
 import { handleDeletion } from "./logic/deletion";
@@ -9,15 +10,10 @@ import { handleSearch } from "./logic/search";
 import { handleReverse } from "./logic/reverse";
 import { handleMax } from "./logic/max";
 import { handleMin } from "./logic/min";
+import ArrayHeader from "./components/ArrayHeader";
+import OperationSelector from "./components/OperationSelector";
 
-import {
-  Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-  RotateCcw,
-  X,
-} from "lucide-react";
+const MAX_CAPACITY = 12;
 
 export default function Array() {
   const initialArr = [
@@ -27,22 +23,19 @@ export default function Array() {
     { id: 3, value: 7, state: "normal" },
     { id: 4, value: 8, state: "normal" },
     { id: 5, value: 21, state: "normal" },
-    { id: 6, value: null, state: "normal" },
-    { id: 7, value: null, state: "normal" },
+    { id: 6, value: 10, state: "normal" },
+    { id: 7, value: 4, state: "normal" },
      { id: 8, value: null, state: "normal" },
-    // { id: 9, value: null, state: "normal" },
-    // { id: 10, value: null, state: "normal" },
-    // { id: 11, value: null, state: "normal" },
-    // { id: 12, value: null, state: "normal" },
-    // { id: 13, value: null, state: "normal" },
-
+    { id: 9, value: null, state: "normal" },
+    { id: 10, value: null, state: "normal" },
+    { id: 11, value: null, state: "normal" },
   ];
 
   const [array, setArray] = useState(initialArr);
   const [stepArr, setStepArr] = useState([]);
   const [inputValue, setInputValue] = useState(22);
   const [inputIndex, setInputIndex] = useState(1);
-  const [n,setN] = useState(6);
+  const [n,setN] = useState(7);
   const [output,setOutput] = useState("");
   const [outputValue,setOutputValue] = useState("");
 
@@ -134,7 +127,6 @@ export default function Array() {
   }
 
   const isDisabled = isPlaying;
-
   const totalSteps = stepArr.length;
 
   return (
@@ -145,35 +137,43 @@ export default function Array() {
 
         {/* 🔹 LEFT */}
         <div className="flex flex-col justify-center items-center bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4">
-
           <ArrayDisplay array={array} />
 
           <div
-  className="mt-4 w-full text-center px-4 py-2 rounded-lg 
-  bg-blue-100 dark:bg-slate-700 
-  text-blue-800 dark:text-blue-300 text-sm"
->
-  {typeof message === "string" &&
-    message.split("#").map((part, index) => {
-      // First part = normal text
-      if (index === 0) {
-        return <span key={index}>{part}</span>;
-      }
+            className="mt-4 w-full text-center px-4 py-2 rounded-lg 
+            bg-blue-100 dark:bg-slate-700 
+            text-blue-800 dark:text-blue-300 text-sm"
+          >
+            {typeof message === "string" && (() => {
+              const parts = message.split("#");
 
-      // Variable part (after #)
-      return (
-        <span
-          key={index}
-          className="ml-2 px-2 py-0.5 rounded 
-          bg-blue-200 dark:bg-slate-600 
-          text-blue-900 dark:text-blue-200 
-          font-medium"
-        >
-          {part.trim()}
-        </span>
-      );
-    })}
-</div>
+              return (
+                <>
+                  {/* 🔹 First Line */}
+                  <div className="w-full">
+                    {parts[0]}
+                  </div>
+
+                  {/* 🔹 Second Line */}
+                  {parts.length > 1 && (
+                    <div className="w-full mt-1 flex flex-wrap justify-center gap-2">
+                      {parts.slice(1).map((part, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-0.5 rounded 
+                          bg-blue-200 dark:bg-slate-600 
+                          text-blue-900 dark:text-blue-200 
+                          font-medium"
+                        >
+                          {part.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+          </div>
           {outputValue.length !== 0 && (
             <div className="
               mt-2 w-full
@@ -212,7 +212,7 @@ export default function Array() {
         {/* 🔹 RIGHT */}
         <div className="flex flex-col gap-4 overflow-hidden">
 
-          {/* 🔥 CODE / INTRO */}
+          {/*  CODE / INTRO */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-1 flex-1 overflow-auto">
 
             {operation !== "none" ? (
@@ -220,25 +220,10 @@ export default function Array() {
                 code={arrayData.code[operation]}
                 currentLine={currentLine}
               />
-            ) : (
-              <div className="h-full flex flex-col justify-center items-center text-center px-6">
-                <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-3">
-                  Array Visualizer
-                </h1>
-
-                <p className="text-slate-600 dark:text-slate-300 max-w-md">
-                  Visualize how arrays work internally. Observe
-                  <span className="text-green-500 font-semibold"> insertion</span>,
-                  <span className="text-red-500 font-semibold"> deletion</span>, and
-                  <span className="text-purple-500 font-semibold"> search </span> 
-                  step by step.
-                </p>
-
-                <p className="text-xs text-slate-400 mt-3">
-                  Select an operation to begin 🚀
-                </p>
-              </div>
-            )}
+            ) :
+              <ArrayHeader />
+            }
+            
           </div>
 
           {/* 🔥 CONTROLS */}
@@ -305,99 +290,7 @@ export default function Array() {
 
             {/* BUTTONS */}
             {operation === "none" ? (
-              <div className="w-full space-y-4">
-
-            {/* Core Operations */}
-            <div>
-              <p className="text-xs text-slate-500 mb-2 px-1">Core Operations</p>
-
-              <div className="grid grid-cols-3 gap-3">
-
-                <button
-                  onClick={() => { setOperation("insertion"); setCurrentLine(-1); }}
-                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
-                  bg-gradient-to-r from-green-400 to-green-600 text-white
-                  shadow-md transition-all duration-300
-                  hover:scale-105 hover:shadow-xl
-                  active:scale-95 overflow-hidden"
-                >
-                  <span className="relative z-10">Insert</span>
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
-                </button>
-
-                <button
-                  onClick={() => { setOperation("deletion"); setCurrentLine(-1); }}
-                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
-                  bg-gradient-to-r from-red-400 to-red-600 text-white
-                  shadow-md transition-all duration-300
-                  hover:scale-105 hover:shadow-xl
-                  active:scale-95 overflow-hidden"
-                >
-                  <span className="relative z-10">Delete</span>
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
-                </button>
-
-                <button
-                  onClick={() => { setOperation("search"); setCurrentLine(-1); }}
-                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
-                  bg-gradient-to-r from-purple-400 to-purple-600 text-white
-                  shadow-md transition-all duration-300
-                  hover:scale-105 hover:shadow-xl
-                  active:scale-95 overflow-hidden"
-                >
-                  <span className="relative z-10">Search</span>
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
-                </button>
-
-              </div>
-            </div>
-
-            {/* Advanced Operations */}
-            <div>
-              <p className="text-xs text-slate-500 mb-2 px-1">Advanced</p>
-
-              <div className="grid grid-cols-3 gap-3">
-
-                <button
-                  onClick={() => { setOperation("reverse"); setCurrentLine(-1); }}
-                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
-                  bg-gradient-to-r from-blue-400 to-blue-600 text-white
-                  shadow-md transition-all duration-300
-                  hover:scale-105 hover:shadow-xl
-                  active:scale-95 overflow-hidden"
-                >
-                  <span className="relative z-10">Reverse</span>
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
-                </button>
-
-                <button
-                  onClick={() => { setOperation("min"); setCurrentLine(-1); }}
-                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
-                  bg-gradient-to-r from-orange-400 to-orange-600 text-white
-                  shadow-md transition-all duration-300
-                  hover:scale-105 hover:shadow-xl
-                  active:scale-95 overflow-hidden"
-                >
-                  <span className="relative z-10">Min</span>
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
-                </button>
-
-                <button
-                  onClick={() => { setOperation("max"); setCurrentLine(-1); }}
-                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
-                  bg-gradient-to-r from-pink-400 to-pink-600 text-white
-                  shadow-md transition-all duration-300
-                  hover:scale-105 hover:shadow-xl
-                  active:scale-95 overflow-hidden"
-                >
-                  <span className="relative z-10">Max</span>
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
-                </button>
-
-              </div>
-            </div>
-
-          </div>
+              <OperationSelector operation={operation} setOperation={setOperation} setCurrentLine={setCurrentLine} />
             ) : (
               <button
                 onClick={handleStart}
@@ -414,125 +307,8 @@ export default function Array() {
       </div>
 
       {/* 🔥 PLAYER BAR (SLIM & COMPACT FOR ALL SCREENS) */}
-      <div className="
-        border-t border-slate-200/70 dark:border-slate-700/60
-        bg-white/80 dark:bg-slate-900/80
-        backdrop-blur-md
-        px-3 py-2
-      ">
-
-        {/* 🔹 Progress Bar */}
-        <input
-          type="range"
-          min={0}
-          max={Math.max(totalSteps - 1, 0)}
-          value={step}
-          onChange={(e) => {
-            setIsPlaying(false);
-            setStep(Number(e.target.value));
-          }}
-          className="
-            w-full h-1 rounded-lg appearance-none cursor-pointer
-            bg-slate-300 dark:bg-slate-700
-            accent-indigo-500 mb-2
-          "
-        />
-
-        {/* 🔹 Controls Row (Single Line Always) */}
-        <div className="flex items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-300">
-
-          {/* 🔸 LEFT: Speed */}
-          <div className="flex items-center gap-2 min-w-[90px]">
-            <span className="text-[11px] whitespace-nowrap">
-              {(2000 / speed).toFixed(1)}x
-            </span>
-
-            <input
-              type="range"
-              min={200}
-              max={2000}
-              step={100}
-              value={speed}
-              onChange={(e) => setSpeed(Number(e.target.value))}
-              className="
-                w-16 h-1 rounded-lg appearance-none cursor-pointer
-                bg-slate-300 dark:bg-slate-700
-                accent-indigo-500
-              "
-            />
-          </div>
-
-          {/* 🔸 CENTER: Controls */}
-          <div className="flex items-center gap-1">
-
-            <button
-              onClick={() => {
-                setIsPlaying(false);
-                setStep(0);
-              }}
-              className="icon-btn-sm"
-            >
-              <RotateCcw size={14} />
-            </button>
-
-            <button
-              onClick={() => {
-                setIsPlaying(false);
-                setStep((s) => Math.max(s - 1, 0));
-              }}
-              className="icon-btn-sm"
-            >
-              <SkipBack size={14} />
-            </button>
-
-            <button
-              onClick={() => setIsPlaying((p) => !p)}
-              className="
-                flex items-center justify-center
-                w-8 h-8 rounded-full
-                bg-indigo-500 text-white
-                hover:bg-indigo-600 active:scale-95
-                transition
-              "
-            >
-              {isPlaying ? <Pause size={14} /> : <Play size={14} />}
-            </button>
-
-            <button
-              onClick={() => {
-                setIsPlaying(false);
-                setStep((s) =>
-                  Math.min(s + 1, totalSteps - 1)
-                );
-              }}
-              className="icon-btn-sm"
-            >
-              <SkipForward size={14} />
-            </button>
-          </div>
-
-          {/* 🔸 RIGHT: Step + Close */}
-          <div className="flex items-center gap-2 min-w-[80px] justify-end">
-
-            <span className="text-[11px] whitespace-nowrap">
-              {step + 1}/{totalSteps}
-            </span>
-
-            <button
-              onClick={onQuit}
-              className="
-                flex items-center justify-center
-                w-7 h-7 rounded-md
-                bg-slate-200 dark:bg-slate-700
-                hover:bg-red-500 hover:text-white
-                transition
-              "
-            >
-              <X size={14} />
-            </button>
-          </div>
-        </div>
-      </div>
+      <PlayBar isPlaying={isPlaying} setIsPlaying={setIsPlaying} step={step} setStep={setStep} speed={speed} setSpeed={setSpeed} totalSteps={totalSteps} onQuit={onQuit}/>
+      
     </div>
   );
 }

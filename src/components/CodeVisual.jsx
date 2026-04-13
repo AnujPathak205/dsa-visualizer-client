@@ -85,11 +85,11 @@ export default function CodeVisual({ code , currentLine = 3}) {
             margin: 0,
             paddingTop: "45px",
             borderRadius: "10px",
-            fontSize: "16px",
+            fontSize: "13px",
           }}
           codeTagProps={{
             style: {
-              fontSize: "12px",
+              fontSize: "16px",
             },
           }}
         >
