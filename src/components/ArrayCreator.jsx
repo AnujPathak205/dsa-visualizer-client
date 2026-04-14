@@ -9,9 +9,9 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
   const [takingUserValues, setTakingUserValues] = useState(false);
   const [values, setValues] = useState([]);
 
-  useEffect(() => {
-    setN(noOfElement);
-  }, [noOfElement]);
+  // useEffect(() => {
+  //   setN(noOfElement);
+  // }, [noOfElement]);
 
   async function generateRandomArray() {
     let newArr = [];
@@ -42,6 +42,8 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
 
     setArray([...newArr]);
     setCreateArr(false);
+    setN(noOfElement);
+
   }
 
   async function handleManualSubmit() {
@@ -80,6 +82,8 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
     }
 
     setArray([...newArr]);
+
+    setN(noOfElement);
 
     setCreateArr(false);
   }

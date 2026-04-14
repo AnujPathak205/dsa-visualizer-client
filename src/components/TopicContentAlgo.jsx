@@ -1,6 +1,6 @@
 import Code from "./Code";
 import Quiz from "./Quiz";
-import BubbleSortVisual from "../features/algorithm/sorting/BubbleSortVisual";
+import { Link } from "react-router-dom";
 
 import {
   Zap,
@@ -8,12 +8,13 @@ import {
   Lightbulb,
   ListOrdered,
   Clock,
+  PlayCircle,
   Brain,
   Link as LinkIcon,
   HelpCircle
 } from "lucide-react";
 
-export default function TopicContentAlgo({ data }) {
+export default function TopicContentAlgo({ data,algoName,visualPath }) {
   return (
     <div className="flex justify-center mt-6 px-4">
       <div className="w-full max-w-4xl flex flex-col gap-6">
@@ -97,7 +98,30 @@ export default function TopicContentAlgo({ data }) {
 
         <Code code={data.code} />
 
-        <BubbleSortVisual />
+        <section className="rounded-2xl p-8 text-center 
+          bg-gradient-to-r from-indigo-500 to-indigo-600 
+          text-white shadow-lg">
+
+          <PlayCircle className="mx-auto mb-4 w-9 h-9" />
+
+          <h2 className="text-2xl font-semibold mb-2">
+            Visualize This Concept
+          </h2>
+
+          <p className="text-sm opacity-90 mb-5">
+            Watch step-by-step execution and understand deeply
+          </p>
+
+          <Link
+            id="Code"
+            to={`/topics/algorithms/${algoName}/${visualPath}/visual`}
+            className="inline-block px-6 py-2 rounded-lg 
+            bg-white text-indigo-600 font-medium 
+            hover:bg-gray-100 transition"
+          >
+            Start Visualization
+          </Link>
+        </section>
 
         {/* Complexity */}
         <section className="bg-white dark:bg-slate-800 

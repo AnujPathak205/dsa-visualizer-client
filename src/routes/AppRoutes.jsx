@@ -6,9 +6,10 @@ import PageNotFoundPage from '../Pages/PageNotFoundPage';
 import TopicPageDS from '../Pages/TopicPageDS';
 import TopicPageAlgo from '../Pages/TopicPageAlgo';
 import SubTopicPageAlgo from '../Pages/SubTopicPageAlgo';
-import VisualPage from '../Pages/VisualPage';
+import VisualPageDS from '../Pages/VisualPageDS';
 import LoginPage from '../Pages/LoginPage';
 import SignupPage from '../Pages/SignupPage';
+import VisualPageAlgo from '../Pages/VisualPageAlgo';
 
 export default function AppRoutes() {
   return (
@@ -39,7 +40,7 @@ export default function AppRoutes() {
             />
 
             <Route path='/topics/data-structures/:topicId/visual'
-                   element={<VisualPage />}
+                   element={<VisualPageDS />}
             />
             
             <Route path='/topics/algorithms'
@@ -52,6 +53,10 @@ export default function AppRoutes() {
 
              <Route path='/topics/algorithms/:topicId/:subTopicId'
                   element={<SubTopicPageAlgo />}
+             />
+
+             <Route path='/topics/algorithms/:topicId/:subTopicId/visual'
+                  element={<VisualPageAlgo />}
              />
 
             <Route path='/about'

@@ -5,7 +5,7 @@ import LinkedList from '../features/data-structure/LinkedList';
 import Stack from '../features/data-structure/Stack';
 import Queue from '../features/data-structure/Queue';
 
-export default function VisualPage() {
+export default function VisualPageDS() {
   const {topicId} = useParams();
 
   const topics = ['array','linkedlist','stack','queue'];

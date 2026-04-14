@@ -7,8 +7,6 @@ import {bubbleSortData} from "../data/algorithm/sorting/bubbleSortData"
 import { selectionSortData } from "../data/algorithm/sorting/selectionSortData";
 import {insertionSortData} from "../data/algorithm/sorting/insertionSortData"
 
-import BubbleSortVisual from "../features/algorithm/sorting/BubbleSortVisual";
-
 export default function SubTopicPageAlgo() {
   const {topicId,subTopicId} = useParams();
   const data = [
@@ -29,12 +27,11 @@ export default function SubTopicPageAlgo() {
     return <PageNotFoundPage />;
   }
 
-
   const index = topics.indexOf(filteredTopics[0]);
 
   return (
     <>
-       <TopicContentAlgo data={data[index]} />
+       <TopicContentAlgo data={data[index]} algoName={topicId} visualPath={subTopicId} />
     </>
   )
 }
