@@ -25,6 +25,7 @@ export default function ArrayDisplay({array}) {
                 ${element.state === "searching" ? "bg-purple-500 text-white scale-110" : ""}
                 ${element.state === "found" ? "bg-green-500 text-white scale-110" : ""}
                 ${element.state === "created" ? "bg-indigo-100 text-indigo-800 ":""}
+                ${element.state === "selected" ? "bg-yellow-400 text-black scale-110" : ""}
               `}
             >
               {element.value != null?element.value:""}

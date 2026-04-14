@@ -3,6 +3,7 @@ export default function SortingSelector({
   algorithm,
   setAlgorithm,
   setCurrentLine,
+  setShowLegend
 }) {
   return (
     <div className="w-full">
@@ -12,7 +13,7 @@ export default function SortingSelector({
           SORTING ALGORITHM
         </label>
 
-        <select
+        <select  onClick={e => setShowLegend(true)} 
           value={algorithm || ""}
           onChange={(e) => {
             setAlgorithm(e.target.value);

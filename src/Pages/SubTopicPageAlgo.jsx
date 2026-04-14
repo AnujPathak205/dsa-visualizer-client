@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { topics } from "../data/algorithm/topics";
 import PageNotFoundPage from "./PageNotFoundPage";
 import TopicContentAlgo from "../components/TopicContentAlgo";
+import WorkingOnIt from "../components/WorkingOnIt";
 
 import {bubbleSortData} from "../data/algorithm/sorting/bubbleSortData"
 import { selectionSortData } from "../data/algorithm/sorting/selectionSortData";
@@ -28,6 +29,10 @@ export default function SubTopicPageAlgo() {
   }
 
   const index = topics.indexOf(filteredTopics[0]);
+
+  if(data){
+    return <WorkingOnIt />
+  }
 
   return (
     <>

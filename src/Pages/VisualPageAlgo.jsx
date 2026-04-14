@@ -3,6 +3,7 @@ import { topics } from "../data/algorithm/topics";
 import PageNotFoundPage from "./PageNotFoundPage";
 
 import SortingVisual from "../features/algorithm/sorting/SortingVisual";
+import WorkingOnIt from "../components/WorkingOnIt";
 
 export default function VisualPageAlgo() {
   const {topicId} = useParams();
@@ -18,9 +19,7 @@ export default function VisualPageAlgo() {
         {
             topicId === "sorting" ?
                 <SortingVisual /> :
-                <div>
-                    <h1>Working on it</h1>
-                </div>
+                <WorkingOnIt />
         }
     </>
   )

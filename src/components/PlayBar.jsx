@@ -36,12 +36,23 @@ export default function PlayBar({isPlaying,setIsPlaying,step,setStep,speed,setSp
             {/* 🔹 Controls Row (Single Line Always) */}
             <div className="flex items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-300">
 
-            {/* 🔸 LEFT: Speed */}
-            <div className="flex items-center gap-2 min-w-[90px]">
-                <span className="text-[11px] whitespace-nowrap">
+            {/* LEFT: Speed */}
+            <div className="flex flex-col items-center gap-1 min-w-[100px]">
+
+            {/* SPEED LABEL */}
+            <span className="text-[11px] text-slate-600 dark:text-slate-300">
                 {(2000 / speed).toFixed(1)}x
+            </span>
+
+            {/* SLIDER WITH MIN/MAX */}
+            <div className="flex items-center gap-2 w-full">
+
+                {/* MIN */}
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                Max
                 </span>
 
+                {/* SLIDER */}
                 <input
                 type="range"
                 min={200}
@@ -50,14 +61,20 @@ export default function PlayBar({isPlaying,setIsPlaying,step,setStep,speed,setSp
                 value={speed}
                 onChange={(e) => setSpeed(Number(e.target.value))}
                 className="
-                    w-16 h-1 rounded-lg appearance-none cursor-pointer
+                    flex-1 h-1 rounded-lg appearance-none cursor-pointer
                     bg-slate-300 dark:bg-slate-700
                     accent-indigo-500
                 "
                 />
+
+                {/* MAX */}
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                Min
+                </span>
+
+            </div>
             </div>
 
-            {/* 🔸 CENTER: Controls */}
             <div className="flex items-center gap-1">
 
                 <button
@@ -108,7 +125,6 @@ export default function PlayBar({isPlaying,setIsPlaying,step,setStep,speed,setSp
                 </button>
             </div>
 
-            {/* 🔸 RIGHT: Step + Close */}
             <div className="flex items-center gap-2 min-w-[80px] justify-end">
 
                 <span className="text-[11px] whitespace-nowrap">

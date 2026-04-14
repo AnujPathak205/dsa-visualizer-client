@@ -17,27 +17,8 @@ It divides the array into sorted and unsorted parts and grows the sorted portion
 
   code: {
     java: `public static void selectionSort(int[] arr) {
-      int n = arr.length;
+    int n = arr.length;
 
-      for(int i = 0; i < n - 1; i++) {
-          int minIndex = i;
-
-          for(int j = i + 1; j < n; j++) {
-              if(arr[j] < arr[minIndex]) {
-                  minIndex = j;
-              }
-          }
-
-          int temp = arr[minIndex];
-          arr[minIndex] = arr[i];
-          arr[i] = temp;
-      }
-  }`,
-
-    cpp: `#include <iostream>
-using namespace std;
-
-void selectionSort(int arr[], int n) {
     for(int i = 0; i < n - 1; i++) {
         int minIndex = i;
 
@@ -47,7 +28,27 @@ void selectionSort(int arr[], int n) {
             }
         }
 
-        swap(arr[minIndex], arr[i]);
+        int temp = arr[minIndex];
+        arr[minIndex] = arr[i];
+        arr[i] = temp;
+    }
+}`,
+
+    cpp: `void selectionSort(int arr[], int n) {
+
+
+    for(int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+
+        for(int j = i + 1; j < n; j++) {
+            if(arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        int temp = arr[minIndex];
+        arr[minIndex] = arr[i];
+        arr[i] = temp;
     }
 }`,
 
@@ -61,9 +62,11 @@ void selectionSort(int arr[], int n) {
             if arr[j] < arr[min_index]:
                 min_index = j
 
-        arr[i], arr[min_index] = arr[min_index], arr[i]
 
-    return arr`
+
+        temp = arr[i]
+        arr[i] = arr[min_index]
+        arr[min_index] = temp `
   },
 
   complexity: {

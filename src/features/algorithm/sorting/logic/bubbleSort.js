@@ -1,6 +1,5 @@
 export function handleBubble(
   array,
-  stepArr,
   setStepArr,
   setMessageArr,
   setCurrentLineArr,

@@ -11,20 +11,23 @@ import { bubbleSortData } from "../../../data/algorithm/sorting/bubbleSortData";
 import { selectionSortData } from "../../../data/algorithm/sorting/selectionSortData";
 import { insertionSortData } from "../../../data/algorithm/sorting/insertionSortData";
 
+
 import { handleBubble } from "./logic/bubbleSort";
+import { handleSelection } from "./logic/selectionSort";
+import { handleInsertion } from "./logic/insertionSort";
+
+import MessageBox from "../../../components/MessageBox";
 
 export default function SortingVisual() {
   const initialArr = [
-    { id: 0, value: 12, state: "normal" },
-    { id: 1, value: 5, state: "normal" },
-    { id: 2, value: 1, state: "normal" },
-    { id: 3, value: 7, state: "normal" },
-    { id: 4, value: 8, state: "normal" },
-    { id: 5, value: 21, state: "normal" },
-    { id: 6, value: 10, state: "normal" },
-    { id: 7, value: 4, state: "normal" },
-    { id: 8, value: 12, state: "normal" },
-    { id: 9, value: 2, state: "normal" },
+    { id: 0, value: 3, state: "normal" },
+    { id: 1, value: 7, state: "normal" },
+    { id: 2, value: 5, state: "normal" },
+    { id: 3, value: 8, state: "normal" },
+    { id: 4, value: 1, state: "normal" },
+    { id: 5, value: 6, state: "normal" },
+    { id: 6, value: 4, state: "normal" },
+    { id: 7, value: 2, state: "normal" }
   ];
 
   const code = {
@@ -53,6 +56,8 @@ export default function SortingVisual() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const [createArr, setCreateArr] = useState(false);
+
+  const [showLegend,setShowLegend] = useState(true);
 
   useEffect(() => {
     if (isPlaying) {
@@ -111,7 +116,26 @@ export default function SortingVisual() {
     if (algorithm === "bubble") {
       return handleBubble(
         ARRAY,
-        stepArr,
+        setStepArr,
+        setMessageArr,
+        setCurrentLineArr,
+        setOutput
+      );
+    }
+
+    if (algorithm === "selection") {
+      return handleSelection(
+        ARRAY,
+        setStepArr,
+        setMessageArr,
+        setCurrentLineArr,
+        setOutput
+      );
+    }
+
+     if (algorithm === "insertion") {
+      return handleInsertion(
+        ARRAY,
         setStepArr,
         setMessageArr,
         setCurrentLineArr,
@@ -148,35 +172,7 @@ export default function SortingVisual() {
           <ArrayDisplay array={array} />
 
           {/* MESSAGE */}
-          <div className="mt-4 w-full text-center px-4 py-2 rounded-md 
-            bg-slate-100 dark:bg-slate-700 
-            text-slate-700 dark:text-slate-200 text-sm">
-
-            {typeof message === "string" && (() => {
-              const parts = message.split("#");
-
-              return (
-                <>
-                  <div>{parts[0]}</div>
-
-                  {parts.length > 1 && (
-                    <div className="mt-1 flex flex-wrap justify-center gap-2">
-                      {parts.slice(1).map((part, index) => (
-                        <span
-                          key={index}
-                          className="px-2 py-0.5 rounded 
-                          bg-slate-200 dark:bg-slate-600 
-                          text-slate-800 dark:text-slate-200 text-xs"
-                        >
-                          {part.trim()}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </>
-              );
-            })()}
-          </div>
+          <MessageBox message={message} algorithm={algorithm} showLegend={showLegend} setShowLegend={setShowLegend} />
 
           {/* OUTPUT */}
           {outputValue && (
@@ -267,6 +263,7 @@ export default function SortingVisual() {
                 algorithm={algorithm}
                 setAlgorithm={setAlgorithm}
                 setCurrentLine={setCurrentLine}
+                setShowLegend={setShowLegend}
               />
             ) : (
               <button
