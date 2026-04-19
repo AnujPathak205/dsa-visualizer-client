@@ -27,7 +27,7 @@ export default function Array() {
     { id: 5, value: 21, state: "normal" },
     { id: 6, value: 10, state: "normal" },
     { id: 7, value: 4, state: "normal" },
-     { id: 8, value: null, state: "normal" },
+    { id: 8, value: null, state: "normal" },
     { id: 9, value: null, state: "normal" },
     { id: 10, value: null, state: "normal" },
     { id: 11, value: null, state: "normal" },
@@ -76,8 +76,7 @@ export default function Array() {
         if(messageArr[step]) setMessage(messageArr[step]);
         setStep((prev) => prev + 1);
       }, speed);
-
-
+      
       return () => clearTimeout(timer);
     }else{
       if(step == 0) return;
@@ -171,7 +170,7 @@ export default function Array() {
             
           </div>
 
-          {/* 🔥 CONTROLS */}
+          {/* CONTROLS */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 flex flex-col gap-4">
 
             {operation !== "none" && !tasking && (

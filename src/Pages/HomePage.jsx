@@ -22,7 +22,7 @@ export default function HomePage() {
     <div className="w-full">
 
       {/* HERO SECTION */}
-      <div className="relative min-h-screen pt-40 pb-10 flex items-center justify-center overflow-hidden 
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden 
       bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
 
         {/* Glow Background */}
@@ -99,7 +99,7 @@ export default function HomePage() {
         </div>
 
         {/* FIXED SCROLL INDICATOR */}
-        <div onClick={scrollToExplore} className="absolute bottom-5 left-1/2 -translate-x-1/2 
+        <div onClick={scrollToExplore} className="absolute bottom-24 left-1/2 -translate-x-1/2 
         flex flex-col items-center text-slate-400 opacity-80">
 
           <span className="text-xs mb-1">Scroll</span>

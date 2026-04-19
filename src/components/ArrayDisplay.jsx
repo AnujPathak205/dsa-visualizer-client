@@ -46,23 +46,23 @@ export default function ArrayDisplay({ array }) {
 
         {/* Theme */}
        <button
-  onClick={() => setDark((prev) => !prev)}
-  className="
-    p-2 rounded-lg
-    border border-slate-400 dark:border-slate-600
-    hover:border-indigo-500 dark:hover:border-indigo-400
-    active:scale-95 transition
-  "
->
-  {dark ? (
-    <Sun className="w-5 h-5 text-yellow-300" />
-  ) : (
-    <Moon className="w-5 h-5 text-slate-800 dark:text-white" />
-  )}
-</button>
+          onClick={() => setDark((prev) => !prev)}
+          className="
+            p-2 rounded-lg
+            border border-slate-400 dark:border-slate-600
+            hover:border-indigo-500 dark:hover:border-indigo-400
+            active:scale-95 transition
+          "
+        >
+          {dark ? (
+            <Sun className="w-5 h-5 text-yellow-300" />
+          ) : (
+            <Moon className="w-5 h-5 text-slate-800 dark:text-white" />
+          )}
+        </button>
 
       </div>
-
+      
       {/* ARRAY */}
       <div className="flex flex-wrap justify-center gap-2 mt-20">
         {array.map((element, index) => (

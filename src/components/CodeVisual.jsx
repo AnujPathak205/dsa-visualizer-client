@@ -3,7 +3,7 @@ import { Copy, Check , Code2 } from "lucide-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-export default function CodeVisual({ code , currentLine = 3}) {
+export default function CodeVisual({ code , currentLine = -1}) {
   const [copied, setCopied] = useState(false);
   const [language, setLanguage] = useState("java");
 

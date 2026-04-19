@@ -88,6 +88,62 @@ class Node:
         self.data = data
         self.next = None
     `
+  },
+
+  addFirst:{
+    java:`public void addFirst(int data){
+  //1. Creating new Node
+  Node newNode = new Node(data);
+
+  if(head == null){
+      head = tail = newNode;
+      size++;
+      return;
+  }
+
+  //2. newNode's next <- head
+  newNode.next = head;
+
+  //3.head <- newNode
+  head = newNode;
+
+  size++;
+}
+`,
+     cpp:`void addFirst(int data) {
+  // 1. Create new node
+  Node* newNode = new Node(data);
+
+  if (head == nullptr) {
+      head = tail = newNode;
+      size++;
+      return;
+  }
+
+  // 2. newNode->next = head
+  newNode->next = head;
+
+  // 3. head = newNode
+  head = newNode;
+
+  size++;
+}
+`,   python:`def add_first(self, data):
+  # 1. Create new node
+  new_node = Node(data)
+
+  if self.head is None:
+      self.head = self.tail = new_node
+      self.size += 1
+      return
+
+  # 2. new_node.next = head
+  new_node.next = self.head
+
+  # 3. head = new_node
+  self.head = new_node
+
+  self.size += 1`
   }
   },
 
