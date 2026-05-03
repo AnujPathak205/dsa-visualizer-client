@@ -113,6 +113,7 @@ export default function LinkedListDisplay({ linkedlist, visualNodes }) {
                               ${node.state === "normal" ? "bg-white dark:bg-slate-700" : ""}
                               ${node.state === "inserted" ? "bg-green-500 text-white" : ""}
                               ${node.state === "deleted" ? "bg-red-500" : ""}
+                              ${node.state === "traversing" ? "bg-yellow-300 dark:bg-yellow-500 text-black scale-105 shadow-lg" : ""}
                             `}>
                               {node.value}
                             </div>
@@ -121,6 +122,7 @@ export default function LinkedListDisplay({ linkedlist, visualNodes }) {
                               ${node.state === "normal" ? "bg-white dark:bg-slate-700" : ""}
                               ${node.state === "inserted" ? "bg-green-500" : ""}
                               ${node.state === "deleted" ? "bg-red-500" : ""}
+                              ${node.state === "traversing" ? "bg-yellow-300 dark:bg-yellow-500 text-black scale-105 shadow-lg" : ""}
                             `}>
                               <div className="w-3 h-3 rounded-full bg-black dark:bg-white"></div>
                             </div>
@@ -152,6 +154,9 @@ export default function LinkedListDisplay({ linkedlist, visualNodes }) {
                       )}
                       {isTail && !isHidden && (
                         <span className="text-red-600 dark:text-red-400">TAIL</span>
+                      )}
+                      {node.tag && !isHidden && (
+                        <span className="text-black dark:text-white">{node.tag}</span>
                       )}
                     </div>
 

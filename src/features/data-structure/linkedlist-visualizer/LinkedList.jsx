@@ -15,16 +15,10 @@ import { handleRemoveLast } from "./logic/removeLast";
 
 export default function LinkedList() {
   const initialLL = [
-    { id: 0, value: 12, state: "normal", arrow: "forward" },
-    { id: 2, value: 1, state: "normal", arrow: "forward" },
-    { id: 7, value: 8, state: "null", arrow: "forward" },
+    { id: 0, value: 12, state: "normal", arrow: "forward" , tag:null},
+    { id: 2, value: 1, state: "normal", arrow: "forward" , tag:null},
+    { id: 7, value: 8, state: "null", arrow: "forward" , tag:null},
   ];
-
-  // const initialVisualNodes = [
-  //   { id: 0, value: 0, state: "unvisible", arrow: "forward" },
-  //   { id: 2, value: 0, state: "unvisible", arrow: "forward" },
-  //   { id: 7, value: 0, state: "unvisible", arrow: "forward" },
-  // ];
 
   const [linkedlist, setLinkedList] = useState(initialLL);
   const [visualNodes, setVisualNodes] = useState([]);
