@@ -1,8 +1,11 @@
 import React from 'react'
 import MessageBox from '../../../../components/MessageBox';
+import { h1 } from 'framer-motion/client';
 
-export default function Operations({linkedlist,operation,setOperation,message,inputValue,setInputValue,inputIndex,setInputIndex,handleStart,onQuit,isRunning}) {
+export default function Operations({linkedlist,operation,setOperation,message,inputValue,setInputValue,inputIndex,setInputIndex,handleStart,onQuit,isRunning,output}) {
     let isDisabled = isRunning;
+
+
 
   return (
     <div>
@@ -12,6 +15,41 @@ export default function Operations({linkedlist,operation,setOperation,message,in
 
             <MessageBox message={message} algorithm={operation} />
 
+            {output && (
+                <div className="
+                    mt-4 w-full max-w-xl
+                    rounded-xl border
+                    border-slate-300 dark:border-slate-600
+                    bg-white dark:bg-slate-900
+                    shadow-md
+                    overflow-hidden
+                ">
+                    
+                    {/* Header */}
+                    <div className="
+                    px-3 py-2
+                    bg-slate-200 dark:bg-slate-800
+                    border-b border-slate-300 dark:border-slate-600
+                    text-xs font-semibold
+                    text-slate-700 dark:text-slate-300
+                    flex justify-between items-center
+                    ">
+                    <span>OUTPUT</span>
+                    </div>
+
+                    {/* Body */}
+                    <div className="
+                    px-4 py-3
+                    text-center
+                    text-lg font-mono
+                    text-green-600 dark:text-green-400
+                    break-words
+                    ">
+                    {output}
+                    </div>
+
+                </div>
+            )}
             {
                 operation === "none" ? 
 
@@ -165,7 +203,7 @@ export default function Operations({linkedlist,operation,setOperation,message,in
                         <button
                             onClick={handleStart}
                             disabled={isDisabled}
-                            className={`w-full py-2  rounded-lg text-white mt-12  ${
+                            className={`w-full py-2  rounded-lg text-white mt-2  ${
                             isDisabled ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
                             }`}
                         >

@@ -1,41 +1,40 @@
 import { useState,useEffect } from "react";
-import LinkedListDisplay from "./components/LinkedListDisplay";
-import CodeVisual from "../../../components/CodeVisual";
+
 import { linkedListData } from "../../../data/data-structure/LinkedListData";
+
+import LinkedListDisplay from "./components/LinkedListDisplay";
 import PlayBar from "../../../components/PlayBar";
 import LinkedListHeader from "./components/LinkedListHeader";
 import Operations from "./components/Operations";
+import CodeVisual from "../../../components/CodeVisual";
+
 import { handleAddFirst } from "./logic/addFirst";
 import { handleAddLast } from "./logic/addLast";
-
+import { handleRemoveFirst } from "./logic/removeFirst";
+import { handleRemoveLast } from "./logic/removeLast";
 
 export default function LinkedList() {
   const initialLL = [
     { id: 0, value: 12, state: "normal", arrow: "forward" },
     { id: 2, value: 1, state: "normal", arrow: "forward" },
-    { id: 3, value: 7, state: "normal", arrow: "forward" },
-    { id: 5, value: 8, state: "normal", arrow: "forward" },
     { id: 7, value: 8, state: "null", arrow: "forward" },
   ];
 
-  const initialVisualNodes = [
-    { id: 0, value: 0, state: "unvisible", arrow: "forward" },
-    { id: 2, value: 0, state: "unvisible", arrow: "forward" },
-    { id: 3, value: 0, state: "unvisible", arrow: "forward" },
-    { id: 6, value: 0, state: "unvisible", arrow: "forward" },
-    { id: 7, value: 0, state: "unvisible", arrow: "forward" },
-  ];
+  // const initialVisualNodes = [
+  //   { id: 0, value: 0, state: "unvisible", arrow: "forward" },
+  //   { id: 2, value: 0, state: "unvisible", arrow: "forward" },
+  //   { id: 7, value: 0, state: "unvisible", arrow: "forward" },
+  // ];
 
   const [linkedlist, setLinkedList] = useState(initialLL);
-  const [visualNodes, setVisualNodes] = useState(initialVisualNodes);
-
-  console.log(visualNodes);
+  const [visualNodes, setVisualNodes] = useState([]);
 
   const [inputValue, setInputValue] = useState(5);
   const [inputIndex, setInputIndex] = useState(2);
 
   const [operation, setOperation] = useState("none");
-  const [message, setMessage] = useState("Choose an operation to start visualization # i = 0");
+  const [message, setMessage] = useState("Choose an operation to start visualization");
+  const [output,setOutput] = useState("");
 
   const [tasking, setTasking] = useState(false);
   const [currentLine, setCurrentLine] = useState(-1);
@@ -47,6 +46,7 @@ export default function LinkedList() {
   const [stepArr,setStepArr] = useState([]);
   const [currentLineArr,setCurrentLineArr] = useState([]);
   const [messageArr, setMessageArr] = useState([]);
+  const [outputArr,setOutputArr] = useState([]);
   const [visualNodesArr,setVisualNodesArr] = useState("");
 
   let totalSteps = stepArr.length;
@@ -58,10 +58,14 @@ export default function LinkedList() {
           setIsPlaying(false);
           return;
         }
-  
-        if(step == stepArr.length-1){
-          // setOutputValue(output);
-          // setTimeout(() => setOutputValue(""),6000);
+
+        if (outputArr.length && outputArr[step]){
+          setOutput(outputArr[step]);
+        }
+
+        if (outputArr.length && step == stepArr.length-1){
+          setTimeout(() => setOutput(""),6000);
+          setOutputArr([]);
         }
   
         const timer = setTimeout(() => {
@@ -81,12 +85,16 @@ export default function LinkedList() {
           setIsPlaying(false);
           return;
         }
-  
-        if(step == stepArr.length-1){
-          // setOutputValue(output);
-          // setTimeout(() => setOutputValue(""),5000);
+
+        if (outputArr.length){
+          setOutput(outputArr[step]);
         }
-  
+
+        if (outputArr.length && output && step == stepArr.length-1){
+          setTimeout(() => setOutput(""),6000);
+          setOutputArr([]);
+        }
+
           setLinkedList(stepArr[step]);
           setCurrentLine(currentLineArr[step]);
           if(messageArr[step]) setMessage(messageArr[step]);
@@ -97,15 +105,16 @@ export default function LinkedList() {
 
     function handleStart(){
       setIsPlaying(true);
-
+      setVisualNodesArr(false);
+      
       if(operation == "addFirst"){
-        handleAddFirst(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
+        handleAddFirst(linkedlist,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
       }else if(operation == "addLast"){
-        handleAddLast(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
+        handleAddLast(linkedlist,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
       }else if(operation == "removeFirst"){
-        handleRemoveFirst(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
+        handleRemoveFirst(linkedlist,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setOutputArr);
       }else if(operation == "removeLast"){
-        handleRemoveLast(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
+        handleRemoveLast(linkedlist,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setOutputArr);
       }
     }
 
@@ -114,6 +123,10 @@ export default function LinkedList() {
       setLinkedList([...stepArr[0]])
       setStepArr([]);
     };
+    setVisualNodes(prev =>
+      prev.map(node => ({ ...node, state: "unvisible" }))
+    );
+
     setCurrentLine(-1);
     setIsPlaying(false);
   }
@@ -146,7 +159,20 @@ export default function LinkedList() {
         {/* RIGHT: Operation Panel */}
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 overflow-auto">
           {/* Operation List */}
-          <Operations linkedlist={linkedlist} operation={operation} setOperation={setOperation} message={message} inputValue={inputValue} setInputValue={setInputValue} inputIndex={inputIndex} setInputIndex={setInputIndex} handleStart={handleStart} onQuit={onQuit} isRunning={isPlaying} />
+          <Operations 
+            linkedlist={linkedlist} 
+            operation={operation} 
+            setOperation={setOperation} 
+            message={message} 
+            inputValue={inputValue} 
+            setInputValue={setInputValue} 
+            inputIndex={inputIndex} 
+            setInputIndex={setInputIndex} 
+            handleStart={handleStart} 
+            onQuit={onQuit} 
+            isRunning={isPlaying} 
+            output={output}
+          />
         </div>
       </div>
 

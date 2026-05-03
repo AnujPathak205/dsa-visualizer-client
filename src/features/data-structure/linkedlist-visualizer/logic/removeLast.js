@@ -1,6 +1,6 @@
 import { getKey } from "../../array-visualizer/logic/helperFunctions";
 
-export function handleRemoveLast(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr){
+export function handleRemoveFirst(linkedlist,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setOutputArr){    
     let steps = [];
     let visualNodesSteps = [];
     let lines = [];
@@ -8,9 +8,15 @@ export function handleRemoveLast(linkedlist,visualNodes,inputValue,setStepArr,se
     const size = linkedlist.length-1;
 
     let newLL = linkedlist.map(node => ({...node}));
-    let newVisualNodes = visualNodes.map(node => ({ ...node }));
 
+    steps.push(newLL.map(node => ({...node}) ));
+    messages.push("Starting remove first operation");
+    lines.push(1);
+    outputs.push(false);
 
+    
+
+    
     
     setStepArr([...steps]);
     setVisualNodesArr([...visualNodesSteps]);
