@@ -1,4 +1,4 @@
-import { getKey } from "../../array-visualizer/logic/helperFunctions";
+import { getKey } from "../../../array-visualizer/logic/helperFunctions";
 
 export function handleAdd(
   linkedlist,
@@ -24,11 +24,6 @@ export function handleAdd(
   // hide all visual nodes initially
   for (let i = 0; i < newVisualNodes.length; i++) {
     newVisualNodes[i].state = "unvisible";
-  }
-
-  // add index tags
-  for (let i = 0; i < size; i++) {
-    newLL[i].tag = i;
   }
 
   // initial state

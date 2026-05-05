@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import BackAndDarkButton from "../../../../components/BackAndDarkButton";
 
-export default function LinkedListDisplay({ linkedlist, visualNodes }) {
+export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexes}) {
   const displayVisualNodes = visualNodes.length > 0;
 
   return (
@@ -111,18 +111,32 @@ export default function LinkedListDisplay({ linkedlist, visualNodes }) {
                           <>
                             <div className={`w-14 h-14 flex items-center justify-center border border-slate-500 text-black dark:text-white font-semibold rounded-l-md
                               ${node.state === "normal" ? "bg-white dark:bg-slate-700" : ""}
+
                               ${node.state === "inserted" ? "bg-green-500 text-white" : ""}
-                              ${node.state === "deleted" ? "bg-red-500" : ""}
-                              ${node.state === "traversing" ? "bg-yellow-300 dark:bg-yellow-500 text-black scale-105 shadow-lg" : ""}
+                              ${node.state === "deleted" ? "bg-red-500 text-white" : ""}
+
+                              ${node.state === "traversing" ? "bg-amber-200 dark:bg-amber-400/60 text-black scale-105 shadow-md" : ""}
+
+                              ${node.state === "created" ? "bg-green-200 dark:bg-green-500/40 text-black shadow-sm transition-all duration-300 ease-in-out" : ""}
+
+                              ${node.state === "state1" ? "bg-yellow-200 dark:bg-yellow-400/70 text-black scale-105 shadow-md" : ""}   /* curr */
+                              ${node.state === "state2" ? "bg-purple-200 dark:bg-purple-400/70 text-black shadow-md" : ""}   /* prev */
                             `}>
                               {node.value}
                             </div>
 
                             <div className={`w-14 h-14 flex items-center justify-center border-t border-b border-r border-slate-500 rounded-r-md
                               ${node.state === "normal" ? "bg-white dark:bg-slate-700" : ""}
-                              ${node.state === "inserted" ? "bg-green-500" : ""}
-                              ${node.state === "deleted" ? "bg-red-500" : ""}
-                              ${node.state === "traversing" ? "bg-yellow-300 dark:bg-yellow-500 text-black scale-105 shadow-lg" : ""}
+
+                              ${node.state === "inserted" ? "bg-green-500 text-white" : ""}
+                              ${node.state === "deleted" ? "bg-red-500 text-white" : ""}
+
+                              ${node.state === "traversing" ? "bg-amber-200 dark:bg-amber-400/60 text-black scale-105 shadow-md" : ""}
+
+                              ${node.state === "created" ? "bg-green-200 dark:bg-green-500/40 text-black shadow-sm transition-all duration-300 ease-in-out" : ""}
+
+                              ${node.state === "state1" ? "bg-yellow-200 dark:bg-yellow-400/70 text-black scale-105 shadow-md" : ""}   /* curr */
+                              ${node.state === "state2" ? "bg-purple-200 dark:bg-purple-400/70 text-black shadow-md" : ""}   /* prev */
                             `}>
                               <div className="w-3 h-3 rounded-full bg-black dark:bg-white"></div>
                             </div>
@@ -147,17 +161,60 @@ export default function LinkedListDisplay({ linkedlist, visualNodes }) {
                       )}
                     </div>
 
-                    {/* LABELS */}
-                    <div className="mt-2 text-xs font-semibold flex gap-2">
-                      {isHead && !isHidden && (
-                        <span className="text-blue-600 dark:text-blue-400">HEAD</span>
+                    {/* LABELS + INDEX */}
+                    <div className="mt-2 flex flex-col items-center">
+
+                      {/* LABELS (fixed height to prevent layout shift) */}
+                      <div className="h-6 flex items-center justify-center gap-2 text-xs font-semibold">
+
+                        {isHead && !isHidden && (
+                          <span className="
+                            px-2 py-[2px] rounded-md
+                            bg-blue-50 dark:bg-blue-500/10
+                            text-blue-700 dark:text-blue-300
+                            border border-blue-200 dark:border-blue-500/30
+                          ">
+                            HEAD
+                          </span>
+                        )}
+
+                        {isTail && !isHidden && (
+                          <span className="
+                            px-2 py-[2px] rounded-md
+                            bg-red-50 dark:bg-red-500/10
+                            text-red-700 dark:text-red-300
+                            border border-red-200 dark:border-red-500/30
+                          ">
+                            TAIL
+                          </span>
+                        )}
+
+                        {node.tag !== null && node.tag !== undefined && !isHidden && (
+                          <span className="
+                            px-2 py-[2px] rounded-md
+                            bg-white dark:bg-slate-700
+                            text-slate-700 dark:text-slate-200
+                            border border-slate-300 dark:border-slate-600
+                            shadow-sm
+                            font-medium
+                          ">
+                            {node.tag}
+                          </span>
+                        )}
+
+                      </div>
+
+                      {/* INDEX (always aligned) */}
+                      {showIndexes && !isHidden && (
+                        <span className="
+                          text-xs font-semibold
+                          text-indigo-600 dark:text-indigo-400
+                          mt-1
+                        ">
+                          {node.state == "null" ? "" : index }
+                        </span>
                       )}
-                      {isTail && !isHidden && (
-                        <span className="text-red-600 dark:text-red-400">TAIL</span>
-                      )}
-                      {node.tag !== null && node.tag !== undefined && !isHidden && (
-                        <span className="text-black dark:text-white">{node.tag}</span>
-                      )}
+
                     </div>
 
                   </div>

@@ -9,7 +9,6 @@ export default function LinkedListCreator({
   setMessage,
   setCreateLL
 }) {
-
   const [noOfElement, setNoOfElement] = useState(5);
   const [takingUserValues, setTakingUserValues] = useState(false);
   const [values, setValues] = useState([]);
@@ -18,18 +17,19 @@ export default function LinkedListCreator({
   async function generateRandomLL() {
     let newLL = [];
 
-    // Step 1: create empty nodes
     for (let i = 0; i < noOfElement; i++) {
       newLL.push({
         id: getKey(),
-        value: null,
-        state: "normal",
+        value: Math.floor(Math.random() * 100),
+        state: "created",
         arrow: "forward",
         tag: null
       });
+
+      setLinkedList([...newLL]);
+      await sleep(400);
     }
 
-    // Add NULL node
     newLL.push({
       id: getKey(),
       value: null,
@@ -39,32 +39,14 @@ export default function LinkedListCreator({
     });
 
     setLinkedList([...newLL]);
-    await sleep(400);
-
-    // Step 2: fill values
-    for (let i = 0; i < noOfElement; i++) {
-      newLL[i].value = Math.floor(Math.random() * 100);
-      newLL[i].state = "found";
-
-      setLinkedList([...newLL]);
-      await sleep(200);
-    }
-
     await sleep(300);
 
-    // Step 3: normalize
-    for (let i = 0; i < newLL.length; i++) {
-      if (newLL[i].state !== "null") {
-        newLL[i].state = "normal";
-      }
-    }
+    newLL.forEach(node => {
+      if (node.state !== "null") node.state = "normal";
+    });
 
     setLinkedList([...newLL]);
-
-    setMessage(
-      `Choose an operation to start visualization # size(n) = ${noOfElement}`
-    );
-
+    setMessage(`Choose an operation to start visualization # size(n) = ${noOfElement}`);
     setCreateLL(false);
   }
 
@@ -72,7 +54,6 @@ export default function LinkedListCreator({
   async function handleManualSubmit() {
     let newLL = [];
 
-    // Step 1: create empty nodes
     for (let i = 0; i < noOfElement; i++) {
       newLL.push({
         id: getKey(),
@@ -94,7 +75,6 @@ export default function LinkedListCreator({
     setLinkedList([...newLL]);
     await sleep(300);
 
-    // Step 2: assign user values
     for (let i = 0; i < noOfElement; i++) {
       newLL[i].value = Number(values[i]);
       newLL[i].state = "found";
@@ -105,26 +85,25 @@ export default function LinkedListCreator({
 
     await sleep(300);
 
-    // Step 3: normalize
-    for (let i = 0; i < newLL.length; i++) {
-      if (newLL[i].state !== "null") {
-        newLL[i].state = "normal";
-      }
-    }
+    newLL.forEach(node => {
+      if (node.state !== "null") node.state = "normal";
+    });
 
     setLinkedList([...newLL]);
-
-    setMessage(
-      `Choose an operation to start visualization # size(n) = ${noOfElement}`
-    );
-
+    setMessage(`Choose an operation to start visualization # size(n) = ${noOfElement}`);
     setCreateLL(false);
   }
 
   return (
-    <div className="max-w-2xl mx-auto py-6 
-      bg-white/80 dark:bg-slate-800/70 
-      backdrop-blur-md rounded-2xl px-4 space-y-6">
+    <div className="
+      w-full max-w-2xl mx-auto
+      overflow-y-auto
+      py-4 sm:py-6
+      px-3 sm:px-4
+      bg-white/80 dark:bg-slate-800/70
+      backdrop-blur-md rounded-none sm:rounded-2xl
+      space-y-5
+    ">
 
       {/* BACK */}
       <button
@@ -138,31 +117,33 @@ export default function LinkedListCreator({
         <>
           {/* TITLE */}
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
               Create Linked List
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Define number of nodes in your linked list.
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              Choose number of nodes
             </p>
           </div>
 
           {/* INFO */}
-          <div className="p-4 rounded-lg 
+          <div className="
+            p-3 sm:p-4 rounded-lg
             bg-indigo-50 dark:bg-slate-900/50
-            border border-indigo-100 dark:border-slate-700 text-sm">
-
+            border border-indigo-100 dark:border-slate-700
+            text-xs sm:text-sm
+          ">
             <p className="text-slate-700 dark:text-slate-300">
-              <span className="font-semibold text-green-600">n</span> = Number of nodes in linked list
+              <span className="font-semibold text-green-600">n</span> = number of nodes
             </p>
             <p className="text-slate-700 dark:text-slate-300 mt-1">
-              Last node always points to <span className="text-red-500 font-semibold">NULL</span>
+              Last node → <span className="text-red-500 font-semibold">NULL</span>
             </p>
           </div>
 
           {/* INPUT */}
           <div>
-            <label className="text-sm font-medium text-slate-600 dark:text-slate-300">
-              Number of Nodes (1 - {MAX_NODES})
+            <label className="text-sm text-slate-600 dark:text-slate-300">
+              Nodes (1 - {MAX_NODES})
             </label>
 
             <input
@@ -175,20 +156,22 @@ export default function LinkedListCreator({
                 if (val > MAX_NODES) return;
                 setNoOfElement(val);
               }}
-              className="ml-2 mt-2 px-3 py-2 rounded-lg border
-                bg-slate-50 dark:bg-slate-700 dark:text-white"
+              className="
+                block mt-2 w-full sm:w-32
+                px-3 py-2 rounded-lg border
+                bg-slate-50 dark:bg-slate-700 dark:text-white
+              "
             />
           </div>
 
           {/* BUTTONS */}
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-3">
 
             <button
               onClick={generateRandomLL}
-              className="flex-1 py-2.5 rounded-xl 
-                bg-indigo-500 text-white hover:bg-indigo-600"
+              className="flex-1 py-2.5 rounded-xl bg-indigo-500 text-white hover:bg-indigo-600"
             >
-              Generate Random
+              Random
             </button>
 
             <button
@@ -196,10 +179,9 @@ export default function LinkedListCreator({
                 setValues(Array(noOfElement).fill(""));
                 setTakingUserValues(true);
               }}
-              className="flex-1 py-2.5 rounded-xl 
-                bg-green-500 text-white hover:bg-green-600"
+              className="flex-1 py-2.5 rounded-xl bg-green-500 text-white hover:bg-green-600"
             >
-              Enter Manually
+              Manual
             </button>
 
           </div>
@@ -207,17 +189,19 @@ export default function LinkedListCreator({
       ) : (
         <>
           {/* TITLE */}
-          <h1 className="text-xl font-semibold text-slate-800 dark:text-white">
-            Enter Node Values
-          </h1>
-
-          <p className="text-sm text-slate-500">
-            n = {noOfElement}
-          </p>
+          <div>
+            <h1 className="text-lg sm:text-xl font-semibold text-slate-800 dark:text-white">
+              Enter Values
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-500">
+              n = {noOfElement}
+            </p>
+          </div>
 
           {/* INPUT GRID */}
-          <div className="grid grid-cols-4 gap-3">
-
+          <div className="
+            grid grid-cols-2 sm:grid-cols-4 gap-3
+          ">
             {values.map((val, idx) => (
               <input
                 key={idx}
@@ -228,29 +212,28 @@ export default function LinkedListCreator({
                   newValues[idx] = e.target.value;
                   setValues(newValues);
                 }}
-                className="px-2 py-2 rounded-lg border text-center 
-                  bg-slate-50 dark:bg-slate-700 dark:text-white"
-                placeholder={`node ${idx}`}
+                className="
+                  px-2 py-2 rounded-lg border text-center
+                  bg-slate-50 dark:bg-slate-700 dark:text-white
+                "
+                placeholder={`#${idx}`}
               />
             ))}
-
           </div>
 
           {/* ACTIONS */}
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-3">
 
             <button
               onClick={handleManualSubmit}
-              className="flex-1 py-2.5 rounded-xl 
-                bg-indigo-500 text-white hover:bg-indigo-600"
+              className="flex-1 py-2.5 rounded-xl bg-indigo-500 text-white hover:bg-indigo-600"
             >
-              Create Linked List
+              Create
             </button>
 
             <button
               onClick={() => setTakingUserValues(false)}
-              className="flex-1 py-2.5 rounded-xl 
-                bg-slate-500 text-white hover:bg-slate-600"
+              className="flex-1 py-2.5 rounded-xl bg-slate-500 text-white hover:bg-slate-600"
             >
               Cancel
             </button>

@@ -141,6 +141,27 @@ export default function HomePage() {
             </div>
           </Link>
 
+
+          <Link
+            to="/topics/data-structures/linkedlist/visual"
+            className="group p-6 rounded-2xl bg-white dark:bg-slate-800 
+            border border-slate-200 dark:border-slate-700 
+            shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+          >
+            <h3 className="text-xl font-semibold mb-2 text-slate-800 dark:text-white">
+              Linked List Visualizer
+            </h3>
+
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              Visualize nodes, pointers, and operations like insert, delete, and traversal step-by-step.
+            </p>
+
+            <div className="mt-4 text-indigo-500 text-sm font-medium">
+              Try Now →
+            </div>
+          </Link>
+
+
           <Link
             to="/topics/algorithms/sorting/visual"
             className="group p-6 rounded-2xl bg-white dark:bg-slate-800 

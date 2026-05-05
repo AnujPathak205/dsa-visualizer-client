@@ -14,10 +14,12 @@ export default function Operations({
   onQuit,
   isRunning,
   output,
-  setOutput
+  setOutput,
+  showIndexes,
+  setShowIndexes
 }) {
 
-  let isDisabled = isRunning;
+  let isDisabled = isRunning;[]
 
   return (
     <div className="h-full flex flex-col">
@@ -124,7 +126,7 @@ export default function Operations({
                   </label>
 
                   <select
-                    value={["reverse","min","max"].includes(operation) ? operation : ""}
+                    value={["midNode","reverse","min","max"].includes(operation) ? operation : ""}
                     onChange={(e) => setOperation(e.target.value)}
                     className="px-3 py-2 rounded-xl text-sm font-medium
                       bg-white dark:bg-slate-800 border
@@ -133,6 +135,7 @@ export default function Operations({
                       focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     <option value="">Select Advanced Operation</option>
+                    <option value="midNode">Find mid node (Slow-fast approach)</option>
                     <option value="reverse">Reverse</option>
                     <option value="min">Min</option>
                     <option value="max">Max</option>
@@ -147,30 +150,56 @@ export default function Operations({
                 !output && (<div>
 
                       {/* BACK + QUIT */}
-                      <div className='flex justify-between items-center w-full'>
-                        <button
-                          onClick={() => setOperation("none")}
-                          className={`px-3 py-1.5 rounded-lg text-sm text-white mb-3 ${
-                            isDisabled
-                              ? "bg-gray-400"
-                              : "bg-slate-500 hover:bg-slate-600"
-                          }`}
-                        >
-                          ← Back
-                        </button>
+                      <div className="flex flex-wrap justify-between items-center gap-3 w-full">
+                          {/* LEFT */}
+                          <button
+                            onClick={() => setOperation("none")}
+                            className={`
+                              px-3 py-1.5 rounded-lg text-sm font-medium
+                              text-white transition
+                              ${isDisabled 
+                                ? "bg-gray-400 cursor-not-allowed" 
+                                : "bg-slate-500 hover:bg-slate-600 active:scale-95"}
+                            `}
+                          >
+                            ← Back
+                          </button>
 
-                        <button
-                          disabled={!isDisabled}
-                          onClick={onQuit}
-                          className={`px-3 py-1.5 rounded-lg text-sm text-white ${
-                            !isDisabled
-                              ? "bg-gray-400"
-                              : "bg-red-500 hover:bg-red-600"
-                          }`}
-                        >
-                          Quit
-                        </button>
-                      </div>
+                          {/* RIGHT */}
+                          <div className="flex items-center gap-2 flex-wrap">
+
+                            {/* Toggle Index */}
+                            <button
+                              onClick={() => setShowIndexes(!showIndexes)}
+                              className="
+                                px-3 py-1.5 rounded-lg text-sm font-medium
+                                border border-slate-300 dark:border-slate-600
+                                bg-white dark:bg-slate-800
+                                text-slate-700 dark:text-slate-200
+                                hover:bg-slate-100 dark:hover:bg-slate-700
+                                transition active:scale-95
+                              "
+                            >
+                              {showIndexes ? "Hide Index" : "Show Index"}
+                            </button>
+
+                            {/* Quit */}
+                            <button
+                              disabled={!isDisabled}
+                              onClick={onQuit}
+                              className={`
+                                px-3 py-1.5 rounded-lg text-sm font-medium text-white
+                                transition
+                                ${!isDisabled
+                                  ? "bg-gray-400 cursor-not-allowed"
+                                  : "bg-red-500 hover:bg-red-600 active:scale-95"}
+                              `}
+                            >
+                              Quit
+                            </button>
+
+                          </div>
+                        </div>
 
                       {/* TITLE */}
                       <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-10">

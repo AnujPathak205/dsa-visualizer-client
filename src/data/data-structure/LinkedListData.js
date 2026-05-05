@@ -798,6 +798,52 @@ size:{
     # 1. Print size
     print(self.size)
 `
+},
+midNode:{
+  java:`public void findMiddle(){
+  // 1. Initialize slow and fast pointers
+  Node slow = head;
+  Node fast = head;
+
+  // 2. Traverse list
+  while(fast != null && fast.next != null){
+      slow = slow.next;
+      fast = fast.next.next;
+  }
+
+  // 3. Middle node
+  System.out.println(slow.value);
+}
+`,
+  cpp:`void findMiddle(){
+  // 1. Initialize slow and fast pointers
+  Node* slow = head;
+  Node* fast = head;
+
+  // 2. Traverse list
+  while(fast != NULL && fast->next != NULL){
+      slow = slow->next;
+      fast = fast->next->next;
+  }
+
+  // 3. Middle node
+  cout << slow->value << endl;
+}
+`,
+  python:`def findMiddle(self):
+    # 1. Initialize slow and fast pointers
+    slow = self.head
+    fast = self.head
+
+    # 2. Traverse list
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        
+
+    # 3. Middle node
+    print(slow.value)
+`
 }
   },
 

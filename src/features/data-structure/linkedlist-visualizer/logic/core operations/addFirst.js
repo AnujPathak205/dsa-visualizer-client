@@ -1,4 +1,4 @@
-import { getKey } from "../../array-visualizer/logic/helperFunctions";
+import { getKey } from "../../../array-visualizer/logic/helperFunctions";
 
 export function handleAddFirst(linkedlist,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr){
     let steps = [];
