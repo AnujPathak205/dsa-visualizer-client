@@ -336,6 +336,468 @@ removeLast:{
   self.tail = node
 
   self.size -= 1`
+},
+
+add:{
+  java:`public void add(int data, int index){
+  if(index < 0 || index > size){
+      System.out.println("Index out of bound");
+      return;
+  }
+
+  if(index == 0){
+      addFirst(data);
+      return;
+  }
+
+  if(index == size){
+      addLast(data);
+      return;
+  }
+
+  // 1. Creating new Node
+  Node newNode = new Node(data);
+
+  // 2. Traverse to (index-1)
+  Node node = head;
+  for(int i = 0; i < index-1; i++){
+      node = node.next;
+  }
+
+  // 3. newNode.next <- node.next
+  newNode.next = node.next;
+
+  // 4. node.next <- newNode
+  node.next = newNode;
+
+  size++;
+}
+`,
+
+  cpp:`void add(int data, int index){
+  if(index < 0 || index > size){
+      cout << "Index out of bound" << endl;
+      return;
+  }
+
+  if(index == 0){
+      addFirst(data);
+      return;
+  }
+
+  if(index == size){
+      addLast(data);
+      return;
+  }
+
+  // 1. Creating new Node
+  Node* newNode = new Node(data);
+
+  // 2. Traverse to (index-1)
+  Node* node = head;
+  for(int i = 0; i < index-1; i++){
+      node = node->next;
+  }
+
+  // 3. newNode->next = node->next
+  newNode->next = node->next;
+
+  // 4. node->next = newNode
+  node->next = newNode;
+
+  size++;
+}
+`,
+
+  python:`def add(self, data, index):
+  if index < 0 or index > self.size:
+      print("Index out of bound")
+      return
+
+  if index == 0:
+      self.addFirst(data)
+      return
+
+  if index == self.size:
+      self.addLast(data)
+      return
+
+  # 1. Creating new Node
+  newNode = Node(data)
+
+  # 2. Traverse to (index-1)
+  node = self.head
+  for i in range(index - 1):
+      node = node.next
+
+  # 3. newNode.next = node.next
+  newNode.next = node.next
+
+  # 4. node.next = newNode
+  node.next = newNode
+
+  self.size += 1`
+},
+
+remove:{
+  java:`public void remove(int index){
+  if(index < 0 || index >= size){
+      System.out.println("Index out of bound");
+      return;
+  }
+
+  if(index == 0){
+      removeFirst();
+      return;
+  }
+
+  if(index == size - 1){
+      removeLast();
+      return;
+  }
+
+  // 1. Traverse to (index-1)
+  Node node = head;
+  for(int i = 0; i < index - 1; i++){
+      node = node.next;
+  }
+
+  // 2. node.next <- node.next.next
+  node.next = node.next.next;
+
+  size--;
+}
+`,
+
+  cpp:`void remove(int index){
+  if(index < 0 || index >= size){
+      cout << "Index out of bound" << endl;
+      return;
+  }
+
+  if(index == 0){
+      removeFirst();
+      return;
+  }
+
+  if(index == size - 1){
+      removeLast();
+      return;
+  }
+
+  // 1. Traverse to (index-1)
+  Node* node = head;
+  for(int i = 0; i < index - 1; i++){
+      node = node->next;
+  }
+
+  // 2. node->next = node->next->next
+  node->next = node->next->next;
+
+  size--;
+}
+`,
+
+  python:`def remove(self, index):
+  if index < 0 or index >= self.size:
+      print("Index out of bound")
+      return
+
+  if index == 0:
+      self.removeFirst()
+      return
+
+  if index == self.size - 1:
+      self.removeLast()
+      return
+
+  # 1. Traverse to (index-1)
+  node = self.head
+  for i in range(index - 1):
+      node = node.next
+
+  # 2. node.next = node.next.next
+  node.next = node.next.next
+
+  self.size -= 1`
+},
+
+traverse:{
+  java:`public void traverse(){
+  if(head == null){
+      System.out.println("LinkedList is empty");
+      return;
+  }
+
+  // 1. Start from head
+  Node node = head;
+
+  // 2. Traverse till end
+  while(node != null){
+      System.out.print(node.data + " -> ");
+      node = node.next;
+  }
+
+  System.out.println("null");
+}
+`,
+
+  cpp:`void traverse(){
+  if(head == nullptr){
+      cout << "LinkedList is empty" << endl;
+      return;
+  }
+
+  // 1. Start from head
+  Node* node = head;
+
+  // 2. Traverse till end
+  while(node != nullptr){
+      cout << node->data << " -> ";
+      node = node->next;
+  }
+
+  cout << "null" << endl;
+}
+`,
+
+  python:`def traverse(self):
+  if self.head is None:
+      print("LinkedList is empty")
+      return
+
+  # 1. Start from head
+  node = self.head
+
+  # 2. Traverse till end
+  while node is not None:
+      print(node.data, end=" -> ")
+      node = node.next
+
+  print("null")`
+},get:{
+  java:`public void get(int index){
+  // 1. Check bounds
+  if(index < 0 || index >= size){
+      System.out.println("Index out of bound");
+      return;
+  }
+
+  // 2. Initialize pointer
+  Node node = head;
+
+  // 3. Traverse to index
+  for(int i = 0; i < index; i++){
+      node = node.next;
+  }
+
+  // 4. Print result
+  System.out.println(node.data);
+}
+`,
+  cpp:`void get(int index){
+  // 1. Check bounds
+  if(index < 0 || index >= size){
+      cout << "Index out of bound" << endl;
+      return;
+  }
+
+  // 2. Initialize pointer
+  Node* node = head;
+
+  // 3. Traverse to index
+  for(int i = 0; i < index; i++){
+      node = node->next;
+  }
+
+  // 4. Print result
+  cout << node->data << endl;
+}
+`,
+  python:`def get(self, index):
+    # 1. Check bounds
+    if index < 0 or index >= self.size:
+        print("Index out of bound")
+        return
+
+    # 2. Initialize pointer
+    node = self.head
+
+    # 3. Traverse to index
+    for i in range(index):
+        node = node.next
+
+    # 4. Print result
+    print(node.data)
+`
+},
+
+update:{
+  java:`public void update(int index, int data){
+  // 1. Check bounds
+  if(index < 0 || index >= size){
+      System.out.println("Index out of bound");
+      return;
+  }
+
+  // 2. Initialize pointer
+  Node node = head;
+
+  // 3. Traverse to index
+  for(int i = 0; i < index; i++){
+      node = node.next;
+  }
+
+  // 4. Update value
+  node.data = data;
+
+  // 5. Print confirmation
+  System.out.println("Updated successfully");
+}
+`,
+  cpp:`void update(int index, int data){
+  // 1. Check bounds
+  if(index < 0 || index >= size){
+      cout << "Index out of bound" << endl;
+      return;
+  }
+
+  // 2. Initialize pointer
+  Node* node = head;
+
+  // 3. Traverse to index
+  for(int i = 0; i < index; i++){
+      node = node->next;
+  }
+
+  // 4. Update value
+  node->data = data;
+
+  // 5. Print confirmation
+  cout << "Updated successfully" << endl;
+}
+`,
+  python:`def update(self, index, data):
+    # 1. Check bounds
+    if index < 0 or index >= self.size:
+        print("Index out of bound")
+        return
+
+    # 2. Initialize pointer
+    node = self.head
+
+    # 3. Traverse to index
+    for i in range(index):
+        node = node.next
+
+    # 4. Update value
+    node.data = data
+
+    # 5. Print confirmation
+    print("Updated successfully")
+`
+},
+
+search:{
+  java:`public void search(int key){
+  // 1. Initialize pointer and index
+  Node node = head;
+  int index = 0;
+
+  // 2. Traverse list
+  while(node != null){
+      if(node.data == key){
+          System.out.println(key+" found at index "+index);
+          return;
+      }
+      node = node.next;
+      index++;
+  }
+
+  // 3. Not found
+  System.out.println("NOT FOUND");
+}
+`,
+  cpp:`void search(int key){
+  // 1. Initialize pointer and index
+  Node* node = head;
+  int index = 0;
+
+  // 2. Traverse list
+  while(node != nullptr){
+      if(node->data == key){
+          cout << key << " found at index "<< index << endl;
+          return;
+      }
+      node = node->next;
+      index++;
+  }
+
+  // 3. Not found
+  cout << "NOT FOUND" << endl;
+}
+`,
+  python:`def search(self, key):
+    # 1. Initialize pointer and index
+    node = self.head
+    index = 0
+
+    # 2. Traverse list
+    while node is not None:
+        if node.data == key:
+            print(key," found at index ",index)
+            return
+        node = node.next
+        index += 1
+
+    # 3. Not found
+    print("NOT FOUND")
+`
+},
+
+isEmpty:{
+  java:`public void isEmpty(){
+  // 1. Check condition
+  if(size == 0){
+      System.out.println(true);
+  }else{
+      System.out.println(false);
+  }
+}
+`,
+  cpp:`void isEmpty(){
+  // 1. Check condition
+  if(size == 0){
+      cout << true << endl;
+  }else{
+      cout << false << endl;
+  }
+}
+`,
+  python:`def isEmpty(self):
+    # 1. Check condition
+    if self.size == 0:
+        print(True)
+    else:
+        print(False)
+`
+},
+
+size:{
+  java:`public void size(){
+  // 1. Print size
+  System.out.println(size);
+}
+`,
+  cpp:`void size(){
+  // 1. Print size
+  cout << size << endl;
+}
+`,
+  python:`def size(self):
+    # 1. Print size
+    print(self.size)
+`
 }
   },
 

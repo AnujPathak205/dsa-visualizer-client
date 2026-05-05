@@ -82,7 +82,7 @@ export function handleRemoveLast(linkedlist,inputValue,setStepArr,setMessageArr,
 
         steps.push(newLL.map(node => ({...node})));
         messages.push("Second last node found");
-        lines.push(16);
+        lines.push(17);
 
         newLL[size-2].state = "normal";
         newLL[size-1].state = "deleted";

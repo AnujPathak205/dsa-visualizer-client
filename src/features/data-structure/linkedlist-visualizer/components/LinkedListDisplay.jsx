@@ -25,7 +25,7 @@ export default function LinkedListDisplay({ linkedlist, visualNodes }) {
                   return (
                     <div key={node.id + "-" + index} className="flex flex-col items-center">
 
-                      <div className="flex items-center">
+                      <div className="flex items-center ">
 
                         {/* NODE */}
                         <motion.div
@@ -101,7 +101,7 @@ export default function LinkedListDisplay({ linkedlist, visualNodes }) {
                       <motion.div
                         layout
                         transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                        className={`flex items-center ${isHidden ? "opacity-0" : ""}`}
+                        className={`flex items-center   ${isHidden ? "opacity-0" : ""}`}
                       >
                         {isNull ? (
                           <div className="w-[112px] h-14 flex items-center justify-center border border-slate-500 rounded-md bg-red-100 text-red-600 dark:bg-red-900/40 dark:text-red-300 font-semibold">
@@ -155,7 +155,7 @@ export default function LinkedListDisplay({ linkedlist, visualNodes }) {
                       {isTail && !isHidden && (
                         <span className="text-red-600 dark:text-red-400">TAIL</span>
                       )}
-                      {node.tag && !isHidden && (
+                      {node.tag !== null && node.tag !== undefined && !isHidden && (
                         <span className="text-black dark:text-white">{node.tag}</span>
                       )}
                     </div>
