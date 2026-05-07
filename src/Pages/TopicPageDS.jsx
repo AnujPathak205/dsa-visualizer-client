@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom' 
 import TopicContentDS from '../components/TopicContentDS'
 
-import {arrayData} from '../data/data-structure/ArrayData';
+import {arrayData} from '../data/data-structure/array/index';
 import {linkedListData} from '../data/data-structure/LinkedListData';
 import {stackData} from '../data/data-structure/StackData';
 import {queueData} from '../data/data-structure/QueueData';

@@ -21,7 +21,7 @@ export default function TopicContentDS({ data, visualPath }) {
 
       <div className="max-w-6xl mx-auto px-6 py-12 space-y-14 min-h-screen">
 
-        {/* 🔥 TITLE */}
+        {/* TITLE */}
         <div id="Description" className="text-center space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white">
             {data.title}
@@ -32,7 +32,7 @@ export default function TopicContentDS({ data, visualPath }) {
           </p>
         </div>
 
-        {/* 🔥 MERGED CONCEPT BOX */}
+        {/* MERGED CONCEPT BOX */}
         <section
           className="rounded-2xl p-8 md:p-10 
           bg-white/80 dark:bg-slate-800/70 
@@ -134,7 +134,7 @@ export default function TopicContentDS({ data, visualPath }) {
           </div>
         </section>
 
-        {/* 🔥 VISUAL CTA */}
+        {/* VISUAL CTA */}
         <section className="rounded-2xl p-8 text-center 
           bg-gradient-to-r from-indigo-500 to-indigo-600 
           text-white shadow-lg">
@@ -160,12 +160,12 @@ export default function TopicContentDS({ data, visualPath }) {
           </Link>
         </section>
 
-        {/* 🔥 CODE */}
+        {/* CODE */}
         <section id="Questions">
-          <Code code={data.code.basic} />
+          <Code code={data.basicCode} />
         </section>
 
-        {/* 🔥 QUESTIONS */}
+        {/* QUESTIONS */}
         <section className="space-y-5">
           <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white">
             <Brain className="w-5 h-5 text-indigo-500" />

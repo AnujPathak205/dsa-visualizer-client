@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ArrayDisplay from "../../../components/ArrayDisplay";
-import { arrayData } from "../../../data/data-structure/ArrayData";
+import { arrayData } from "../../../data/data-structure/array/index";
 import CodeVisual from "../../../components/CodeVisual";
 import PlayBar from "../../../components/PlayBar";
 
