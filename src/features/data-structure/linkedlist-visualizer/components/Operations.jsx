@@ -1,8 +1,16 @@
 import React from 'react'
 import MessageBox from '../../../../components/MessageBox';
+import { linkedListData } from '../../../../data/data-structure/LinkedListData';
+
+import { Timer, Database } from "lucide-react";
 
 export default function Operations({
   linkedlist,
+  setLinkedlist,
+  setMessage,
+  setVisualNodes,
+  stepArr,
+  visualNodesArr,
   operation,
   setOperation,
   message,
@@ -60,7 +68,7 @@ export default function Operations({
 
               <div className="space-y-4">
 
-                <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-6">
+                <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-3">
                   Choose Operation (size = {linkedlist.length-1})
                 </h2>
 
@@ -149,109 +157,169 @@ export default function Operations({
               
                 !output && (<div>
 
-                      {/* BACK + QUIT */}
+                      {/* BACK + CONTROLS */}
                       <div className="flex flex-wrap justify-between items-center gap-3 w-full">
-                          {/* LEFT */}
+
+                        {/* LEFT */}
+                        <button
+                          onClick={() => {
+                            setOperation("none");
+                            setMessage("Choose an operation to start visualization");
+                            if(stepArr.length>0) setLinkedlist(stepArr[stepArr.length-1]);
+                            if(visualNodesArr.length>0) setVisualNodes(visualNodesArr[visualNodesArr.length-1]);
+                          }}
+                          disabled={isDisabled}
+                          className={`
+                            px-3 py-1.5 rounded-lg text-sm font-medium text-white transition
+                            ${isDisabled
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "bg-slate-500 hover:bg-slate-600 active:scale-95"}
+                          `}
+                        >
+                          ← Back
+                        </button>
+
+                        {/* RIGHT */}
+                        <div className="flex items-center gap-2 flex-wrap">
+
+                          {/* Toggle Index */}
                           <button
-                            onClick={() => setOperation("none")}
-                            className={`
+                            onClick={() => setShowIndexes(!showIndexes)}
+                            className="
                               px-3 py-1.5 rounded-lg text-sm font-medium
-                              text-white transition
-                              ${isDisabled 
-                                ? "bg-gray-400 cursor-not-allowed" 
-                                : "bg-slate-500 hover:bg-slate-600 active:scale-95"}
-                            `}
+                              border border-slate-300 dark:border-slate-600
+                              bg-white dark:bg-slate-800
+                              text-slate-700 dark:text-slate-200
+                              hover:bg-slate-100 dark:hover:bg-slate-700
+                              transition active:scale-95
+                            "
                           >
-                            ← Back
+                            {showIndexes ? "Hide Indexes" : "Show Indexes"}
                           </button>
 
-                          {/* RIGHT */}
-                          <div className="flex items-center gap-2 flex-wrap">
+                          {/* Quit */}
+                          <button
+                            disabled={!isDisabled}
+                            onClick={onQuit}
+                            className={`
+                              px-3 py-1.5 rounded-lg text-sm font-medium text-white transition
+                              ${!isDisabled
+                                ? "bg-gray-400 cursor-not-allowed"
+                                : "bg-red-500 hover:bg-red-600 active:scale-95"}
+                            `}
+                          >
+                            Quit
+                          </button>
 
-                            {/* Toggle Index */}
-                            <button
-                              onClick={() => setShowIndexes(!showIndexes)}
-                              className="
-                                px-3 py-1.5 rounded-lg text-sm font-medium
-                                border border-slate-300 dark:border-slate-600
-                                bg-white dark:bg-slate-800
-                                text-slate-700 dark:text-slate-200
-                                hover:bg-slate-100 dark:hover:bg-slate-700
-                                transition active:scale-95
-                              "
-                            >
-                              {showIndexes ? "Hide Index" : "Show Index"}
-                            </button>
-
-                            {/* Quit */}
-                            <button
-                              disabled={!isDisabled}
-                              onClick={onQuit}
-                              className={`
-                                px-3 py-1.5 rounded-lg text-sm font-medium text-white
-                                transition
-                                ${!isDisabled
-                                  ? "bg-gray-400 cursor-not-allowed"
-                                  : "bg-red-500 hover:bg-red-600 active:scale-95"}
-                              `}
-                            >
-                              Quit
-                            </button>
-
-                          </div>
                         </div>
+                      </div>
 
                       {/* TITLE */}
-                      <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-10">
-                        Operation: {operation} (size = {linkedlist.length-1})
+                      <h2 className="text-lg font-semibold text-slate-800 dark:text-white mt-2 mb-2">
+                        Operation:{" "}
+                        <span className="text-indigo-500">
+                          {operation.replace(/([A-Z])/g, " $1")}
+                        </span>{" "}
+                        (size = {linkedlist.length - 1})
                       </h2>
 
                       {/* INPUTS */}
                       <div className="flex gap-6 flex-wrap">
 
-                        {(operation === "addFirst" || operation === "addLast" || operation === "add" || operation === "update" || operation === "search") && (
+                        {(operation === "addFirst" ||
+                          operation === "addLast" ||
+                          operation === "add" ||
+                          operation === "update" ||
+                          operation === "search") && (
                           <div>
                             <label className="text-xs text-slate-500 dark:text-slate-400">
-                              Input Value {" "}
+                              Input Value &nbsp;
                             </label>
                             <input
                               type="number"
                               value={inputValue}
                               onChange={(e) => setInputValue(Number(e.target.value))}
-                              className="w-16 px-3 py-1 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white"
+                              className="w-20 mt-1 px-3 py-1 rounded border 
+                              bg-gray-50 dark:bg-slate-700 dark:text-white"
                             />
                           </div>
                         )}
 
-                        {(operation === "add" || operation === "remove" || operation === "get" || operation === "update") && (
+                        {(operation === "add" ||
+                          operation === "remove" ||
+                          operation === "get" ||
+                          operation === "update") && (
                           <div>
                             <label className="text-xs text-slate-500 dark:text-slate-400">
-                              Target Index {" "}
+                              Target Index &nbsp;
                             </label>
                             <input
                               type="number"
                               value={inputIndex}
                               onChange={(e) => setInputIndex(Number(e.target.value))}
-                              className="w-16 px-3 py-1 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white"
+                              className="w-20 mt-1 px-3 py-1 rounded border 
+                              bg-gray-50 dark:bg-slate-700 dark:text-white"
                             />
                           </div>
                         )}
 
                       </div>
 
+                      {/* COMPLEXITY */}
+
+                    {operation !== "none" &&
+                      linkedListData.complexityForOperations[operation] && (
+                        <div
+                          className="
+                            mt-3 px-3 py-2.5 rounded-lg
+                            bg-slate-50 dark:bg-slate-700/40
+                            border border-slate-200 dark:border-slate-700
+                            text-sm space-y-2
+                          "
+                        >
+
+                          {/* TC + SC */}
+                          <div className="flex items-center justify-between">
+
+                            {/* TIME */}
+                            <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                              <Timer size={16} className="text-indigo-500" />
+                              <span>
+                                Time:
+                                <span className="ml-1 font-semibold text-indigo-500">
+                                  {linkedListData.complexityForOperations[operation].TC}
+                                </span>
+                              </span>
+                            </div>
+
+                            {/* SPACE */}
+                            <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                              <Database size={16} className="text-green-500" />
+                              <span>
+                                Space:
+                                <span className="ml-1 font-semibold text-green-500">
+                                  {linkedListData.complexityForOperations[operation].SC}
+                                </span>
+                              </span>
+                            </div>
+
+                          </div>
+
+                          {/* REASON */}
+                          <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
+                            {linkedListData.complexityForOperations[operation].reason}
+                          </p>
+
+                        </div>
+                    )}
                     </div>
-                    
               )
-              
-
-              
-
             )
           }
         </div>
       </div>
 
-      {/* 🔥 FIXED BOTTOM BUTTON */}
+      {/* FIXED BOTTOM BUTTON */}
       {operation !== "none" && (
         <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
           <button

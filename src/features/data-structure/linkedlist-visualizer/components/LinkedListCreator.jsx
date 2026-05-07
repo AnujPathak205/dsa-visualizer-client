@@ -17,6 +17,7 @@ export default function LinkedListCreator({
   async function generateRandomLL() {
     let newLL = [];
 
+    let speed = 100;
     for (let i = 0; i < noOfElement; i++) {
       newLL.push({
         id: getKey(),
@@ -27,7 +28,8 @@ export default function LinkedListCreator({
       });
 
       setLinkedList([...newLL]);
-      await sleep(400);
+      await sleep(speed);
+      speed += 25;
     }
 
     newLL.push({
@@ -39,7 +41,7 @@ export default function LinkedListCreator({
     });
 
     setLinkedList([...newLL]);
-    await sleep(300);
+    await sleep(250);
 
     newLL.forEach(node => {
       if (node.state !== "null") node.state = "normal";
@@ -125,21 +127,6 @@ export default function LinkedListCreator({
             </p>
           </div>
 
-          {/* INFO */}
-          <div className="
-            p-3 sm:p-4 rounded-lg
-            bg-indigo-50 dark:bg-slate-900/50
-            border border-indigo-100 dark:border-slate-700
-            text-xs sm:text-sm
-          ">
-            <p className="text-slate-700 dark:text-slate-300">
-              <span className="font-semibold text-green-600">n</span> = number of nodes
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 mt-1">
-              Last node → <span className="text-red-500 font-semibold">NULL</span>
-            </p>
-          </div>
-
           {/* INPUT */}
           <div>
             <label className="text-sm text-slate-600 dark:text-slate-300">
@@ -165,7 +152,7 @@ export default function LinkedListCreator({
           </div>
 
           {/* BUTTONS */}
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 mt-10">
 
             <button
               onClick={generateRandomLL}
@@ -222,7 +209,7 @@ export default function LinkedListCreator({
           </div>
 
           {/* ACTIONS */}
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 ">
 
             <button
               onClick={handleManualSubmit}

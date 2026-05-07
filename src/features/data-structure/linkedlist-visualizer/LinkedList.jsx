@@ -93,6 +93,7 @@ export default function LinkedList() {
   function handleStart() {
     setIsPlaying(true);
     setVisualNodesArr([]);
+    setVisualNodes(false);
     setOutputArr([]);
 
     const operationMap = {
@@ -144,6 +145,7 @@ export default function LinkedList() {
     setStepArr([]);
     setCurrentLine(-1);
     setIsPlaying(false);
+    setVisualNodes(false);
   }
 
   // ================= UI =================
@@ -185,6 +187,11 @@ export default function LinkedList() {
           <div className="flex-1 overflow-y-auto p-3">
             <Operations
               linkedlist={linkedlist}
+              setLinkedlist={setLinkedList}
+              setMessage={setMessage}
+              setVisualNodes={setVisualNodes}
+              stepArr={stepArr}
+              visualNodesArr={visualNodesArr}
               operation={operation}
               setOperation={setOperation}
               message={message}
