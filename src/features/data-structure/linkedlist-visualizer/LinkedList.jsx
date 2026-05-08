@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { linkedListData } from "../../../data/data-structure/LinkedListData";
+import { linkedListData } from "../../../data/data-structure/linkedlist/index";
 
 import LinkedListDisplay from "./components/LinkedListDisplay";
 import PlayBar from "../../../components/PlayBar";
@@ -95,6 +95,7 @@ export default function LinkedList() {
     setVisualNodesArr([]);
     setVisualNodes(false);
     setOutputArr([]);
+    setStep(0);
 
     const operationMap = {
       addFirst: () =>

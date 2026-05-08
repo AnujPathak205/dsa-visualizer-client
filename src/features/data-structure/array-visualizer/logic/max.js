@@ -15,22 +15,26 @@ export function handleMax(array,setStepArr,n,setOutput,setCurrentLineArr,setMess
         setOutput("Array is empty");
 
         steps.push([...newArr]);
-        lines.push(2);
-        messages.push("Array is empty # no elements to compare");
-
-        steps.push([...newArr]);
         lines.push(3);
-        messages.push(false);
+        messages.push("Array is empty # no elements to compare");
 
         steps.push([...newArr]);
         lines.push(4);
         messages.push(false);
 
+        steps.push([...newArr]);
+        lines.push(5);
+        messages.push(false);
+
     } else {
 
         steps.push([...newArr]);
-        lines.push(7);
+        lines.push(9);
         messages.push(`Initialize maximum with first element # max = ${newArr[0].value}`);
+
+        steps.push([...newArr]);
+        lines.push(12);
+        messages.push(`Traversing array`);
 
         let MAX = newArr[0].value;
 
@@ -39,7 +43,7 @@ export function handleMax(array,setStepArr,n,setOutput,setCurrentLineArr,setMess
             newArr[i].state = "searching";
 
             steps.push(newArr.map(item => ({ ...item })));
-            lines.push(9);
+            lines.push(13);
             messages.push(`Comparing current element with max # i = ${i} # current = ${newArr[i].value} # max = ${MAX}`);
 
             if(newArr[i].value > MAX){
@@ -48,19 +52,19 @@ export function handleMax(array,setStepArr,n,setOutput,setCurrentLineArr,setMess
                 newArr[i].state = "found";
 
                 steps.push(newArr.map(item => ({ ...item })));
-                lines.push(11);
+                lines.push(15);
                 messages.push(`New maximum found # i = ${i} # updated max = ${MAX}`);
             }
 
             newArr[i].state = "normal";
 
             steps.push(newArr.map(item => ({ ...item })));
-            lines.push(9);
+            lines.push(12);
             messages.push(false);
         }
 
         steps.push([...newArr]);
-        lines.push(15);
+        lines.push(20);
         messages.push(`Maximum value found # max = ${MAX}`);
 
         setOutput(`Max value: ${MAX}`);

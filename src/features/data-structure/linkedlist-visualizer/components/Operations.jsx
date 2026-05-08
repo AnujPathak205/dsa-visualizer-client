@@ -267,6 +267,8 @@ export default function Operations({
 
                       {/* COMPLEXITY */}
 
+                      {/*
+
                     {operation !== "none" &&
                       linkedListData.complexityForOperations[operation] && (
                         <div
@@ -278,10 +280,8 @@ export default function Operations({
                           "
                         >
 
-                          {/* TC + SC */}
-                          <div className="flex items-center justify-between">
+                           <div className="flex items-center justify-between">
 
-                            {/* TIME */}
                             <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                               <Timer size={16} className="text-indigo-500" />
                               <span>
@@ -292,7 +292,6 @@ export default function Operations({
                               </span>
                             </div>
 
-                            {/* SPACE */}
                             <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                               <Database size={16} className="text-green-500" />
                               <span>
@@ -305,13 +304,12 @@ export default function Operations({
 
                           </div>
 
-                          {/* REASON */}
                           <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
                             {linkedListData.complexityForOperations[operation].reason}
                           </p>
 
-                        </div>
-                    )}
+                        </div> 
+                    )}*/}
                     </div>
               )
             )

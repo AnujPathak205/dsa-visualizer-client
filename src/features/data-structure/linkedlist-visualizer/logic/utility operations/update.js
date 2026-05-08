@@ -34,6 +34,11 @@ export function handleUpdate(linkedlist,inputIndex,inputValue,setStepArr,setMess
 
         steps.push(newLL.map((node) => ({ ...node })));
         messages.push("Initializing traversal pointer # Node node = head");
+        lines.push(9);
+        outputs.push(false);
+
+        steps.push(newLL.map((node) => ({ ...node })));
+        messages.push("Traversing to index # for(int i = 0; i < index; i++)");
         lines.push(12);
         outputs.push(false);
 

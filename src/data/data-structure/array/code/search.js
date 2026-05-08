@@ -8,8 +8,7 @@ export const search = {
     }
 
     System.out.println("Element not found");
-}
-`,    cpp:`void search(int arr[], int n, int capacity, int key) {
+}`,    cpp:`void search(int arr[], int n, int capacity, int key) {
     for (int i = 0; i < n; i++) {
         if (arr[i] == key) {
             cout << "Element found at index: " << i << endl;
@@ -25,8 +24,41 @@ export const search = {
             print("Element found at index:", i)
             return
 
-            
+    print("Element not found")`,
 
-    print("Element not found")`
+
+    pseudo:`FUNCTION search(arr, n, key)
+    FOR i = 0 TO n - 1
+        IF arr[i] == key
+            PRINT "Element found at index: ", i
+            RETURN
+        END IF
+
+    END FOR
+
+    PRINT "Element not found"
+
+END FUNCTION`,
     
+
+    lines:{
+        pseudo:{
+            1:1,
+            2:2,
+            3:3,
+            4:4,
+            5:5,
+            9:10
+
+        },
+        python:{
+            1:1,
+            2:2,
+            3:3,
+            4:4,
+            5:5,
+            9:7
+        }
+    },
+
 }
