@@ -23,6 +23,8 @@ import { handleIsEmpty } from "./logic/utility operations/isEmpty";
 import { handleSize } from "./logic/utility operations/size";
 
 import { handleMidNode } from "./logic/advance operations/midNode";
+import { handleReverse } from "./logic/advance operations/reverse";
+import { reverse } from "../../../data/data-structure/linkedlist/code/advanceOperations/reverse";
 
 export default function LinkedList() {
 
@@ -67,7 +69,7 @@ export default function LinkedList() {
       return;
     }
 
-    if (outputArr[step]) setOutput(outputArr[step]);
+    if(output && step === stepArr.length-1) setTimeout(() => setOutput(false),5000); 
 
     if (isPlaying) {
       const timer = setTimeout(() => {
@@ -75,6 +77,7 @@ export default function LinkedList() {
         setCurrentLine(currentLineArr[step]);
         if (messageArr[step]) setMessage(messageArr[step]);
         if (visualNodesArr[step]) setVisualNodes(visualNodesArr[step]);
+        if (outputArr[step]) setOutput(outputArr[step]);
         setStep((prev) => prev + 1);
       }, speed);
 
@@ -86,6 +89,7 @@ export default function LinkedList() {
       setCurrentLine(currentLineArr[step]);
       if (messageArr[step]) setMessage(messageArr[step]);
       if (visualNodesArr[step]) setVisualNodes(visualNodesArr[step]);
+      if (outputArr[step]) setOutput(outputArr[step]);
     }
   }, [step, isPlaying, stepArr]);
 
@@ -135,7 +139,11 @@ export default function LinkedList() {
         handleSize(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr),
 
       midNode: () =>
-        handleMidNode(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr)
+        handleMidNode(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr),
+
+      reverse: () => {
+        handleReverse(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr);
+      }
     };
 
     operationMap[operation]?.();
@@ -159,6 +167,7 @@ export default function LinkedList() {
           linkedlist={linkedlist}
           visualNodes={visualNodes}
           showIndexes={showIndexes}
+          operation={operation}
         />
       </div>
 

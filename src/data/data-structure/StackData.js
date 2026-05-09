@@ -45,8 +45,7 @@ You place a plate on top and remove from top.
     }
   ]
 ,
-  code: {
-    basic:{
+    basicCode:{
     java:`
 // Java Stack Example
 import java.util.Stack;
@@ -81,8 +80,8 @@ class Stack:
   def push(self, x):
       self.stack.append(x)
   `
-  }
-},
+  },
+
 
   realLifeExample: `  
 Stack of plates in a kitchen.

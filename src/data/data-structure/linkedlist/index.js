@@ -24,6 +24,7 @@ import { size } from "./code/utilityOperations/size";
 // Advance operations
 
 import { midNode } from "./code/advanceOperations/midNode";
+import { reverse } from "./code/advanceOperations/reverse";
 
 export const linkedListData = {
     ...linkedlistInfo,
@@ -46,6 +47,7 @@ export const linkedListData = {
         isEmpty,
         size,
 
-        midNode
+        midNode,
+        reverse
     }
 }

@@ -41,23 +41,65 @@ export default function Operations({
 
           {/* OUTPUT */}
           {output && (
-            <div className="mt-4 w-full flex-1 rounded-xl border
-                border-slate-300 dark:border-slate-600 
-                bg-white dark:bg-slate-900 shadow-md overflow-hidden flex flex-col">
+            <div
+              className="
+                mt-4 w-full flex-1 flex flex-col overflow-hidden
+                rounded-2xl
+                border border-slate-200 dark:border-slate-700
+                bg-white dark:bg-slate-900
+                shadow-lg shadow-slate-200/40 dark:shadow-black/20
+              "
+            >
 
-                {/* Header */}
-                <div className="px-3 py-2 bg-slate-200 dark:bg-slate-800 
-                  border-b border-slate-300 dark:border-slate-600
-                  text-xs font-semibold text-slate-700 dark:text-slate-300 flex justify-between">
-                  <span>OUTPUT</span>
-                  <button onClick={() => setOutput("")}>X</button>
-                </div>
+              {/* HEADER */}
+              <div
+                className="
+                  flex items-center justify-between
+                  px-4 py-2.5
+                  rounded-t-2xl
+                  border-b border-slate-200 dark:border-slate-700
+                  bg-slate-100 dark:bg-slate-800
+                "
+              >
+                <span className="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200">
+                  OUTPUT
+                </span>
 
-                {/* Body */}
-                <div className="px-4 py-3 text-center text-lg font-mono
-                    text-green-600 dark:text-green-400 break-words flex-1 overflow-auto">
-                    {output}
-                </div>
+                <button
+                  onClick={() => setOutput("")}
+                  className="
+                    flex items-center justify-center
+                    w-7 h-7 rounded-lg
+                    text-slate-500 dark:text-slate-300
+                    hover:bg-red-100 dark:hover:bg-red-500/20
+                    hover:text-red-600 dark:hover:text-red-400
+                    transition-all duration-200
+                    active:scale-90
+                  "
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* BODY */}
+              <div
+                className="
+                  flex-1 overflow-auto
+                  px-4 py-5
+                  flex items-center justify-center
+                  text-center
+                "
+              >
+                <span
+                  className="
+                    text-xl font-mono font-semibold
+                    text-emerald-600 dark:text-emerald-400
+                    break-words
+                  "
+                >
+                  {output || "No Output"}
+                </span>
+              </div>
 
             </div>
           )}
@@ -144,9 +186,7 @@ export default function Operations({
                   >
                     <option value="">Select Advanced Operation</option>
                     <option value="midNode">Find mid node (Slow-fast approach)</option>
-                    <option value="reverse">Reverse</option>
-                    <option value="min">Min</option>
-                    <option value="max">Max</option>
+                    <option value="reverse">Reverse linkedlist (3 pointer approach)</option>
                   </select>
                 </div>
 
