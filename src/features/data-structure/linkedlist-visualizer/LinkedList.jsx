@@ -24,15 +24,16 @@ import { handleSize } from "./logic/utility operations/size";
 
 import { handleMidNode } from "./logic/advance operations/midNode";
 import { handleReverse } from "./logic/advance operations/reverse";
-import { reverse } from "../../../data/data-structure/linkedlist/code/advanceOperations/reverse";
+import { handleDetectCycle } from "./logic/advance operations/detectCycle";
 
 export default function LinkedList() {
 
   const initialLL = [
     { id: 0, value: 1, state: "normal", arrow: "forward", tag: null },
     { id: 1, value: 12, state: "normal", arrow: "forward", tag: null },
-    { id: 2, value: 5, state: "normal", arrow: "forward", tag: null },
-    { id: 3, value: 0, state: "null", arrow: "forward", tag: null },
+    { id: 2, value: 2, state: "normal", arrow: "forward", tag: null },
+    { id: 3, value: 5, state: "normal", arrow: "forward", tag: null },
+    { id: 4, value: 5, state: "null", arrow: "forward", tag: null },
   ];
 
   const [linkedlist, setLinkedList] = useState(initialLL);
@@ -59,7 +60,10 @@ export default function LinkedList() {
 
   const [showIndexes, setShowIndexes] = useState(false);
 
+  const [cycle,setCycle] = useState(false);
+
   const totalSteps = stepArr.length;
+
 
   // ================= PLAY ENGINE =================
   useEffect(() => {
@@ -97,7 +101,7 @@ export default function LinkedList() {
   function handleStart() {
     setIsPlaying(true);
     setVisualNodesArr([]);
-    setVisualNodes(false);
+    if(!cycle) setVisualNodes(false);
     setOutputArr([]);
     setStep(0);
 
@@ -141,9 +145,12 @@ export default function LinkedList() {
       midNode: () =>
         handleMidNode(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr),
 
-      reverse: () => {
-        handleReverse(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr);
-      }
+      reverse: () => 
+        handleReverse(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr),
+      
+      detectCycle: () =>
+          handleDetectCycle(linkedlist,setStepArr,setVisualNodesArr, setMessageArr,setCurrentLineArr,setOutputArr,cycle),
+
     };
 
     operationMap[operation]?.();
@@ -168,6 +175,7 @@ export default function LinkedList() {
           visualNodes={visualNodes}
           showIndexes={showIndexes}
           operation={operation}
+          cycle={setCycle}
         />
       </div>
 
@@ -216,6 +224,9 @@ export default function LinkedList() {
               setOutput={setOutput}
               showIndexes={showIndexes}
               setShowIndexes={setShowIndexes}
+              cycle={cycle}
+              setCycle={setCycle}
+              step={step}
             />
           </div>
         </div>

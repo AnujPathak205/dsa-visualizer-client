@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MessageBox from '../../../../components/MessageBox';
 import { linkedListData } from '../../../../data/data-structure/LinkedListData';
 
 import { Timer, Database } from "lucide-react";
+import Output from './Output';
+import OperationSelector from './OperationSelector';
+import { h1 } from 'framer-motion/client';
+import ViewOperation from './ViewOperation';
+import { getKey } from '../../array-visualizer/logic/helperFunctions';
 
 export default function Operations({
   linkedlist,
@@ -24,12 +29,14 @@ export default function Operations({
   output,
   setOutput,
   showIndexes,
-  setShowIndexes
+  setShowIndexes,
+  cycle,
+  setCycle,
+  step
 }) {
+  let isDisabled = isRunning;
 
-  let isDisabled = isRunning;[]
-
-  return (
+    return (
     <div className="h-full flex flex-col">
 
       {/* TOP CONTENT */}
@@ -41,317 +48,41 @@ export default function Operations({
 
           {/* OUTPUT */}
           {output && (
-            <div
-              className="
-                mt-4 w-full flex-1 flex flex-col overflow-hidden
-                rounded-2xl
-                border border-slate-200 dark:border-slate-700
-                bg-white dark:bg-slate-900
-                shadow-lg shadow-slate-200/40 dark:shadow-black/20
-              "
-            >
-
-              {/* HEADER */}
-              <div
-                className="
-                  flex items-center justify-between
-                  px-4 py-2.5
-                  rounded-t-2xl
-                  border-b border-slate-200 dark:border-slate-700
-                  bg-slate-100 dark:bg-slate-800
-                "
-              >
-                <span className="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200">
-                  OUTPUT
-                </span>
-
-                <button
-                  onClick={() => setOutput("")}
-                  className="
-                    flex items-center justify-center
-                    w-7 h-7 rounded-lg
-                    text-slate-500 dark:text-slate-300
-                    hover:bg-red-100 dark:hover:bg-red-500/20
-                    hover:text-red-600 dark:hover:text-red-400
-                    transition-all duration-200
-                    active:scale-90
-                  "
-                >
-                  ✕
-                </button>
-              </div>
-
-              {/* BODY */}
-              <div
-                className="
-                  flex-1 overflow-auto
-                  px-4 py-5
-                  flex items-center justify-center
-                  text-center
-                "
-              >
-                <span
-                  className="
-                    text-xl font-mono font-semibold
-                    text-emerald-600 dark:text-emerald-400
-                    break-words
-                  "
-                >
-                  {output || "No Output"}
-                </span>
-              </div>
-
-            </div>
+            <Output output={output} setOutput={setOutput} />
           )}
 
           {/* ================= OPERATION SELECT ================= */}
           {
             operation === "none" ? (
-
-              <div className="space-y-4">
-
-                <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-3">
-                  Choose Operation (size = {linkedlist.length-1})
-                </h2>
-
-                {/* CORE */}
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs text-slate-500 dark:text-slate-400">
-                    CORE OPERATIONS
-                  </label>
-
-                  <select
-                    value={[
-                      "addFirst","addLast","add","removeFirst","removeLast",
-                      "remove","traverse"
-                    ].includes(operation) ? operation : ""}
-                    onChange={(e) => setOperation(e.target.value)}
-                    className="px-3 py-2 rounded-xl text-sm font-medium
-                      bg-white dark:bg-slate-800 border
-                      border-slate-200 dark:border-slate-700
-                      text-slate-700 dark:text-slate-200
-                      focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  >
-                    <option value="">Select Core Operation</option>
-                    <option value="addFirst">Add First</option>
-                    <option value="addLast">Add Last</option>
-                    <option value="add">Add at any index</option>
-                    <option value="removeFirst">Remove First</option>
-                    <option value="removeLast">Remove Last</option>
-                    <option value="remove">Remove at any index</option>
-                    <option value="traverse">Traverse</option>
-                  </select>
-                </div>
-
-                {/* UTILITY */}
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs text-slate-500 dark:text-slate-400">
-                    UTILITY OPERATIONS
-                  </label>
-
-                  <select
-                    value={[
-                      "get","update","search","isEmpty","size"
-                    ].includes(operation) ? operation : ""}
-                    onChange={(e) => setOperation(e.target.value)}
-                    className="px-3 py-1 rounded-xl text-sm font-medium
-                      bg-white dark:bg-slate-800 border
-                      border-slate-200 dark:border-slate-700
-                      text-slate-700 dark:text-slate-200
-                      focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  >
-                    <option value="">Select Utility Operation</option>
-                    <option value="get">Get</option>
-                    <option value="update">Update</option>
-                    <option value="search">Search</option>
-                    <option value="isEmpty">Is Empty</option>
-                    <option value="size">Size</option>
-                  </select>
-                </div>
-
-                {/* ADVANCED */}
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs text-slate-500 dark:text-slate-400">
-                    ADVANCED OPERATIONS
-                  </label>
-
-                  <select
-                    value={["midNode","reverse","min","max"].includes(operation) ? operation : ""}
-                    onChange={(e) => setOperation(e.target.value)}
-                    className="px-3 py-2 rounded-xl text-sm font-medium
-                      bg-white dark:bg-slate-800 border
-                      border-slate-200 dark:border-slate-700
-                      text-slate-700 dark:text-slate-200
-                      focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  >
-                    <option value="">Select Advanced Operation</option>
-                    <option value="midNode">Find mid node (Slow-fast approach)</option>
-                    <option value="reverse">Reverse linkedlist (3 pointer approach)</option>
-                  </select>
-                </div>
-
-              </div>
-
+              <OperationSelector 
+                  linkedlist={linkedlist} 
+                  operation={operation} 
+                  setOperation={setOperation} />
             ) : (
 
               
-                !output && (<div>
-
-                      {/* BACK + CONTROLS */}
-                      <div className="flex flex-wrap justify-between items-center gap-3 w-full">
-
-                        {/* LEFT */}
-                        <button
-                          onClick={() => {
-                            setOperation("none");
-                            setMessage("Choose an operation to start visualization");
-                            if(stepArr.length>0) setLinkedlist(stepArr[stepArr.length-1]);
-                            if(visualNodesArr.length>0) setVisualNodes(visualNodesArr[visualNodesArr.length-1]);
-                          }}
-                          disabled={isDisabled}
-                          className={`
-                            px-3 py-1.5 rounded-lg text-sm font-medium text-white transition
-                            ${isDisabled
-                              ? "bg-gray-400 cursor-not-allowed"
-                              : "bg-slate-500 hover:bg-slate-600 active:scale-95"}
-                          `}
-                        >
-                          ← Back
-                        </button>
-
-                        {/* RIGHT */}
-                        <div className="flex items-center gap-2 flex-wrap">
-
-                          {/* Toggle Index */}
-                          <button
-                            onClick={() => setShowIndexes(!showIndexes)}
-                            className="
-                              px-3 py-1.5 rounded-lg text-sm font-medium
-                              border border-slate-300 dark:border-slate-600
-                              bg-white dark:bg-slate-800
-                              text-slate-700 dark:text-slate-200
-                              hover:bg-slate-100 dark:hover:bg-slate-700
-                              transition active:scale-95
-                            "
-                          >
-                            {showIndexes ? "Hide Indexes" : "Show Indexes"}
-                          </button>
-
-                          {/* Quit */}
-                          <button
-                            disabled={!isDisabled}
-                            onClick={onQuit}
-                            className={`
-                              px-3 py-1.5 rounded-lg text-sm font-medium text-white transition
-                              ${!isDisabled
-                                ? "bg-gray-400 cursor-not-allowed"
-                                : "bg-red-500 hover:bg-red-600 active:scale-95"}
-                            `}
-                          >
-                            Quit
-                          </button>
-
-                        </div>
-                      </div>
-
-                      {/* TITLE */}
-                      <h2 className="text-lg font-semibold text-slate-800 dark:text-white mt-2 mb-2">
-                        Operation:{" "}
-                        <span className="text-indigo-500">
-                          {operation.replace(/([A-Z])/g, " $1")}
-                        </span>{" "}
-                        (size = {linkedlist.length - 1})
-                      </h2>
-
-                      {/* INPUTS */}
-                      <div className="flex gap-6 flex-wrap">
-
-                        {(operation === "addFirst" ||
-                          operation === "addLast" ||
-                          operation === "add" ||
-                          operation === "update" ||
-                          operation === "search") && (
-                          <div>
-                            <label className="text-xs text-slate-500 dark:text-slate-400">
-                              Input Value &nbsp;
-                            </label>
-                            <input
-                              type="number"
-                              value={inputValue}
-                              onChange={(e) => setInputValue(Number(e.target.value))}
-                              className="w-20 mt-1 px-3 py-1 rounded border 
-                              bg-gray-50 dark:bg-slate-700 dark:text-white"
-                            />
-                          </div>
-                        )}
-
-                        {(operation === "add" ||
-                          operation === "remove" ||
-                          operation === "get" ||
-                          operation === "update") && (
-                          <div>
-                            <label className="text-xs text-slate-500 dark:text-slate-400">
-                              Target Index &nbsp;
-                            </label>
-                            <input
-                              type="number"
-                              value={inputIndex}
-                              onChange={(e) => setInputIndex(Number(e.target.value))}
-                              className="w-20 mt-1 px-3 py-1 rounded border 
-                              bg-gray-50 dark:bg-slate-700 dark:text-white"
-                            />
-                          </div>
-                        )}
-
-                      </div>
-
-                      {/* COMPLEXITY */}
-
-                      {/*
-
-                    {operation !== "none" &&
-                      linkedListData.complexityForOperations[operation] && (
-                        <div
-                          className="
-                            mt-3 px-3 py-2.5 rounded-lg
-                            bg-slate-50 dark:bg-slate-700/40
-                            border border-slate-200 dark:border-slate-700
-                            text-sm space-y-2
-                          "
-                        >
-
-                           <div className="flex items-center justify-between">
-
-                            <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
-                              <Timer size={16} className="text-indigo-500" />
-                              <span>
-                                Time:
-                                <span className="ml-1 font-semibold text-indigo-500">
-                                  {linkedListData.complexityForOperations[operation].TC}
-                                </span>
-                              </span>
-                            </div>
-
-                            <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
-                              <Database size={16} className="text-green-500" />
-                              <span>
-                                Space:
-                                <span className="ml-1 font-semibold text-green-500">
-                                  {linkedListData.complexityForOperations[operation].SC}
-                                </span>
-                              </span>
-                            </div>
-
-                          </div>
-
-                          <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
-                            {linkedListData.complexityForOperations[operation].reason}
-                          </p>
-
-                        </div> 
-                    )}*/}
-                    </div>
-              )
+              !output && (
+                <ViewOperation 
+                  operation={operation} 
+                  setOperation={setOperation} 
+                  linkedlist={linkedlist} 
+                  stepArr={stepArr}
+                  setMessage={setMessage} 
+                  inputIndex={inputIndex} 
+                  setInputIndex={setInputIndex} 
+                  inputValue={inputValue} 
+                  setInputValue={setInputValue} 
+                  setLinkedlist={setLinkedlist} 
+                  visualNodesArr={visualNodesArr} 
+                  setVisualNodes={setVisualNodes} 
+                  showIndexes={showIndexes} 
+                  setShowIndexes={setShowIndexes} 
+                  onQuit={onQuit} 
+                  isDisabled={isDisabled}
+                  cycle={cycle}
+                  setCycle={setCycle}
+                  step={step} />
+            )
             )
           }
         </div>

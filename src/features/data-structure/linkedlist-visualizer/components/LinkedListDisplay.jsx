@@ -1,14 +1,15 @@
 import { motion } from "framer-motion";
 import BackAndDarkButton from "../../../../components/BackAndDarkButton";
 import { useState,useEffect } from "react";
+import { div } from "framer-motion/client";
 
-export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexes,operation}) {
+export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexes,operation,cycle}) {
 
   const displayVisualNodes = visualNodes.length > 0;
   const [minimalVersion,setMinimalVersion] = useState(false);
 
   useEffect(() => {
-    if(operation === "reverse"){
+    if(operation === "reverse" || operation === "detectCycle"){
       setMinimalVersion(true);
     }
   }, [operation]);
@@ -18,7 +19,7 @@ export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexe
       <BackAndDarkButton />
 
       {
-        (operation !== "reverse") && (
+        (operation !== "reverse" && operation !== "detectCycle") && (
           <div className="fixed top-11 right-6 z-10">
 
             <div className="flex items-center gap-2">
@@ -293,6 +294,10 @@ export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexe
 
 
 
+
+
+
+
           (
             <div className="w-max mx-auto px-4">
 
@@ -301,9 +306,6 @@ export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexe
             <div className="flex items-start min-w-max px-4 overflow-visible">
 
               {displayVisualNodes && visualNodes.map((node, index) => {
-
-                const isHead = index === 0 || (linkedlist[index-1].state === "null");
-                const isTail = index === linkedlist.length - 2;
 
                 const isNull = node.state === "null";
                 const isHidden = node.state === "unvisible";
@@ -393,7 +395,7 @@ export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexe
 
                         {/* newNode */}
                         {
-                          node.arrow !== "down" && node.state !== "null" &&
+                          node.arrow !== "down" && node.state !== "null" && !cycle &&
                             <div className="flex items-center gap-1 flex-wrap justify-center">
                             <span className="
                               px-2 py-[2px]
@@ -406,6 +408,18 @@ export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexe
                             </span>
                           </div>
                         }
+
+                        {node.tag && (
+                            <span className="
+                              px-2 py-[2px]
+                              text-[12px] font-medium
+                              rounded-md
+                              bg-slate-200 dark:bg-slate-700
+                              text-slate-700 dark:text-slate-200
+                            ">
+                              {node.tag}
+                            </span>
+                          )}
 
                       </div>
 
@@ -565,17 +579,22 @@ export default function LinkedListDisplay({ linkedlist, visualNodes , showIndexe
                             </span>
                           )}
 
-                          {isTail && !isNull && (
-                            <span className="
-                              px-2 py-[2px]
-                              text-[10px] font-semibold
-                              rounded-md
-                              bg-red-100 dark:bg-red-500/20
-                              text-red-700 dark:text-red-300
-                            ">
-                              TAIL
-                            </span>
-                          )}
+                          {
+                            !cycle &&
+                            <div>
+                              {isTail && !isNull && (
+                              <span className="
+                                px-2 py-[2px]
+                                text-[10px] font-semibold
+                                rounded-md
+                                bg-red-100 dark:bg-red-500/20
+                                text-red-700 dark:text-red-300
+                              ">
+                                TAIL
+                              </span>
+                            )}
+                            </div>
+                          }
 
                           {node.tag && (
                             <span className="
