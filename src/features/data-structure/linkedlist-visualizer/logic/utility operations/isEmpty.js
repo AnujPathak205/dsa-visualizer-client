@@ -1,4 +1,4 @@
-export function handleIsEmpty({linkedlist,setStepArr,setMessageArr,setCurrentLineArr,setOutputArr}){
+export function handleIsEmpty(linkedlist,setStepArr,setMessageArr,setCurrentLineArr,setOutputArr){
     let steps = [];
     let lines = [];
     let messages = [];

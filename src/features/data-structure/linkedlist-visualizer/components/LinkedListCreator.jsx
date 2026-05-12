@@ -48,7 +48,7 @@ export default function LinkedListCreator({
     });
 
     setLinkedList([...newLL]);
-    setMessage(`Choose an operation to start visualization # size(n) = ${noOfElement}`);
+    setMessage(`Choose an operation to start visualization`);
     setCreateLL(false);
   }
 

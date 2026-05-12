@@ -16,6 +16,12 @@ It takes each element and inserts it into its correct position in the already so
   ],
 
   code: {
+    lines:{
+    pseudo:{
+      1:1
+    }
+  },
+    pseudo:"Pseudo code is not available,try java,cpp,python",
     java: `public static void insertionSort(int[] arr) {
       int n = arr.length;
 

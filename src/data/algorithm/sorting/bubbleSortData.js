@@ -15,7 +15,15 @@ After each pass, the largest unsorted element moves to its correct position at t
     "Repeat for remaining elements (n-1 passes)"
   ],
 
+
+
   code: {
+    lines:{
+    pseudo:{
+      1:1
+    }
+  },
+    pseudo:"Pseudo code is not available,try java,cpp,python",
     java: `public static void bubbleSort(int[] arr) {
     int n = arr.length;
 

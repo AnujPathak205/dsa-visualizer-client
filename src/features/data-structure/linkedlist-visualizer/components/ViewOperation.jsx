@@ -25,7 +25,7 @@ export const secondHalf = [
 ];
 
 
-export default function ViewOperation({operation,setOperation,linkedlist,stepArr,setMessage,inputIndex,setInputIndex,inputValue,setInputValue,setLinkedlist,visualNodesArr,setVisualNodes,showIndexes,setShowIndexes,onQuit,isDisabled,cycle,setCycle,step}) {
+export default function ViewOperation({operation,setOperation,linkedlist,stepArr,setStepArr,setMessage,inputIndex,setInputIndex,inputValue,setInputValue,setLinkedlist,visualNodesArr,setVisualNodes,showIndexes,setShowIndexes,onQuit,isDisabled,cycle,setCycle,step}) {
   const [prevLL,setPrevLL] = useState([]);
   
     function createCycle(){
@@ -39,6 +39,7 @@ export default function ViewOperation({operation,setOperation,linkedlist,stepArr
     }
   
     function deleteCycle(){
+      onQuit();
       setLinkedlist([...prevLL]);
       setVisualNodes([]);
   
@@ -58,7 +59,11 @@ export default function ViewOperation({operation,setOperation,linkedlist,stepArr
                 setMessage("Choose an operation to start visualization");
                 if(stepArr.length>0) setLinkedlist(stepArr[stepArr.length-1]);
                 if(visualNodesArr.length>0) setVisualNodes(visualNodesArr[visualNodesArr.length-1]);
-                if(cycle) deleteCycle();
+                if(cycle){
+                    deleteCycle();
+                }
+                setStepArr([]);
+            
                 }}
                 disabled={isDisabled}
                 className={`
@@ -161,7 +166,7 @@ export default function ViewOperation({operation,setOperation,linkedlist,stepArr
             <span className="text-indigo-500">
                 {operation.replace(/([A-Z])/g, " $1")}
             </span>{" "}
-            (size = {linkedlist.length - 1})
+            (size = {(operation === "detectCycle" && cycle)? "9":(linkedlist.length - 1)})
             </h2>
 
             {/* INPUTS */}

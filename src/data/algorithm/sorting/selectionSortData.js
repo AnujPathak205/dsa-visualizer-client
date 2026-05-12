@@ -16,6 +16,12 @@ It divides the array into sorted and unsorted parts and grows the sorted portion
   ],
 
   code: {
+    lines:{
+    pseudo:{
+      1:1
+    }
+  },
+    pseudo:"Pseudo code is not available,try java,cpp,python",
     java: `public static void selectionSort(int[] arr) {
     int n = arr.length;
 

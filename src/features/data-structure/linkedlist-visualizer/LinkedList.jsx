@@ -137,7 +137,7 @@ export default function LinkedList() {
         handleSearch(linkedlist, inputValue, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr),
 
       isEmpty: () =>
-        handleIsEmpty(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr),
+        handleIsEmpty(linkedlist,setStepArr,setMessageArr,setCurrentLineArr,setOutputArr),
 
       size: () =>
         handleSize(linkedlist, setStepArr, setMessageArr, setCurrentLineArr, setOutputArr),
@@ -209,6 +209,7 @@ export default function LinkedList() {
               setMessage={setMessage}
               setVisualNodes={setVisualNodes}
               stepArr={stepArr}
+              setStepArr={setStepArr}
               visualNodesArr={visualNodesArr}
               operation={operation}
               setOperation={setOperation}

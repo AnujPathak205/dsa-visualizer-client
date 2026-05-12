@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import MessageBox from '../../../../components/MessageBox';
-import { linkedListData } from '../../../../data/data-structure/LinkedListData';
 
 import { Timer, Database } from "lucide-react";
 import Output from './Output';
 import OperationSelector from './OperationSelector';
-import { h1 } from 'framer-motion/client';
 import ViewOperation from './ViewOperation';
 import { getKey } from '../../array-visualizer/logic/helperFunctions';
 
@@ -15,6 +13,7 @@ export default function Operations({
   setMessage,
   setVisualNodes,
   stepArr,
+  setStepArr,
   visualNodesArr,
   operation,
   setOperation,
@@ -67,6 +66,7 @@ export default function Operations({
                   setOperation={setOperation} 
                   linkedlist={linkedlist} 
                   stepArr={stepArr}
+                  setStepArr={setStepArr}
                   setMessage={setMessage} 
                   inputIndex={inputIndex} 
                   setInputIndex={setInputIndex} 

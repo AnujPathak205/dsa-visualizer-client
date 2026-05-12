@@ -30,7 +30,7 @@ export default function SubTopicPageAlgo() {
 
   const index = topics.indexOf(filteredTopics[0]);
 
-  if(!data){
+  if(!data[index]){
     return <WorkingOnIt />
   }
 
