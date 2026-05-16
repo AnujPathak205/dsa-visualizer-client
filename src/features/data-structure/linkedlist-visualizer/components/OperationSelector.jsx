@@ -92,6 +92,14 @@ export default function OperationSelector({linkedlist,operation,setOperation}) {
                 Detect Cycle (Floyd’s Cycle Detection)
             </option>
 
+            <option value="findCycleStart">
+                Find Cycle Start (Floyd’s Algorithm)
+            </option>
+            
+            <option value="removeCycle">
+                Remove Cycle
+            </option>
+
             
             </select>
         </div>

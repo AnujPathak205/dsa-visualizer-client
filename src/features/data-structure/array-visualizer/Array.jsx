@@ -34,7 +34,7 @@ export default function Array() {
   ];
 
   const [array, setArray] = useState(initialArr);
-  const [stepArr, setStepArr] = useState([]);
+  const [stepArr, setStepArr] = useState([]);   
   const [inputValue, setInputValue] = useState(22);
   const [inputIndex, setInputIndex] = useState(1);
   const [n,setN] = useState(8);

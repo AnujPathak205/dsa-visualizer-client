@@ -1,162 +1,296 @@
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff } from "lucide-react";
 
 export default function SignupPage() {
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting }
   } = useForm();
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+
+    // API call here
+    // await registerUser(data)
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 px-4">
+    <main className="min-h-screen flex items-center justify-center px-6 py-12 bg-[#0a0e23] overflow-hidden relative">
 
-      {/* 🔹 Card */}
-      <div className="
-        w-full max-w-md
-        bg-white/90 dark:bg-slate-900/80
-        backdrop-blur-xl
-        border border-slate-200 dark:border-slate-700
-        rounded-2xl shadow-xl
-        p-6
-      ">
+      {/* Background Blur */}
+      <div className="absolute top-[-200px] right-[-200px] w-[500px] h-[500px] bg-indigo-500/20 rounded-full blur-[120px]" />
+      <div className="absolute bottom-[-200px] left-[-200px] w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[120px]" />
 
-        {/* 🔸 Heading */}
-        <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
+      <div className="w-full max-w-lg relative z-10">
+
+        {/* Heading */}
+        <div className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
             Create Account
-          </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Sign up to start using the visualizer
+          </h1>
+
+          <p className="mt-2 text-slate-400 text-lg">
+            Start your DSA visualization journey
           </p>
         </div>
 
-        {/* 🔸 Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          
-          {/* Full Name */}
-          <div>
-            <label className="label">Full Name</label>
-            <input
-              type="text"
-              placeholder="John Doe"
-              {...register("fullName", {
-                required: "Full name is required",
-              })}
-              className={`input ${errors.fullName ? "input-error" : ""}`}
-            />
-            {errors.fullName && (
-              <p className="error">{errors.fullName.message}</p>
-            )}
-          </div>
+        {/* Register Card */}
+        <div
+          className="
+            relative overflow-hidden
+            rounded-3xl
+            border border-white/10
+            bg-white/5
+            backdrop-blur-2xl
+            shadow-2xl
+            p-8 md:p-10
+          "
+        >
 
-          {/* Username */}
-          <div>
-            <label className="label">Username</label>
-            <input
-              type="text"
-              placeholder="john123"
-              {...register("userName", {
-                required: "Username is required",
-                minLength: {
-                  value: 3,
-                  message: "Minimum 3 characters",
-                },
-              })}
-              className={`input ${errors.username ? "input-error" : ""}`}
-            />
-            {errors.username && (
-              <p className="error">{errors.username.message}</p>
-            )}
-          </div>
+          {/* Card Glow */}
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/20 rounded-full blur-3xl" />
 
-          {/* Email */}
-          <div>
-            <label className="label">Email Address</label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Invalid email address",
-                },
-              })}
-              className={`input ${errors.email ? "input-error" : ""}`}
-            />
-            {errors.email && (
-              <p className="error">{errors.email.message}</p>
-            )}
-          </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="relative z-10 space-y-8"
+          >
 
-          {/* Password */}
-          <div>
-            <label className="label">Password</label>
+            {/* Inputs */}
+            <div className="space-y-6">
 
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Minimum 6 characters",
-                  },
-                })}
-                className={`input pr-10 ${errors.password ? "input-error" : ""}`}
-              />
+              {/* Full Name */}
+              <div className="space-y-2">
+
+                <label className="text-sm font-semibold uppercase tracking-wider text-indigo-300/80">
+                  Full Name
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="John Doe"
+                  {...register("fullName", {
+                    required: "Full name is required"
+                  })}
+                  className="
+                    w-full
+                    bg-transparent
+                    border-0 border-b border-slate-600
+                    py-3
+                    text-white
+                    placeholder:text-slate-500
+                    focus:outline-none
+                    focus:border-indigo-400
+                    transition
+                  "
+                />
+
+                {errors.fullName && (
+                  <p className="text-sm text-red-400">
+                    {errors.fullName.message}
+                  </p>
+                )}
+
+              </div>
+
+              {/* Username */}
+              <div className="space-y-2">
+
+                <label className="text-sm font-semibold uppercase tracking-wider text-indigo-300/80">
+                  Username
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="john_doe"
+                  {...register("username", {
+                    required: "Username is required",
+                    minLength: {
+                      value: 3,
+                      message: "Minimum 3 characters required"
+                    }
+                  })}
+                  className="
+                    w-full
+                    bg-transparent
+                    border-0 border-b border-slate-600
+                    py-3
+                    text-white
+                    placeholder:text-slate-500
+                    focus:outline-none
+                    focus:border-indigo-400
+                    transition
+                  "
+                />
+
+                {errors.username && (
+                  <p className="text-sm text-red-400">
+                    {errors.username.message}
+                  </p>
+                )}
+
+              </div>
+
+              {/* Email */}
+              <div className="space-y-2">
+
+                <label className="text-sm font-semibold uppercase tracking-wider text-indigo-300/80">
+                  Email Address
+                </label>
+
+                <input
+                  type="email"
+                  placeholder="name@example.com"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Invalid email address"
+                    }
+                  })}
+                  className="
+                    w-full
+                    bg-transparent
+                    border-0 border-b border-slate-600
+                    py-3
+                    text-white
+                    placeholder:text-slate-500
+                    focus:outline-none
+                    focus:border-indigo-400
+                    transition
+                  "
+                />
+
+                {errors.email && (
+                  <p className="text-sm text-red-400">
+                    {errors.email.message}
+                  </p>
+                )}
+
+              </div>
+
+              {/* Password */}
+              <div className="space-y-2">
+
+                <label className="text-sm font-semibold uppercase tracking-wider text-indigo-300/80">
+                  Password
+                </label>
+
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Minimum 6 characters required"
+                    }
+                  })}
+                  className="
+                    w-full
+                    bg-transparent
+                    border-0 border-b border-slate-600
+                    py-3
+                    text-white
+                    placeholder:text-slate-500
+                    focus:outline-none
+                    focus:border-indigo-400
+                    transition
+                  "
+                />
+
+                {errors.password && (
+                  <p className="text-sm text-red-400">
+                    {errors.password.message}
+                  </p>
+                )}
+
+              </div>
+
+            </div>
+
+            {/* Register Button */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="
+                w-full
+                py-4
+                rounded-xl
+                font-bold
+                tracking-wide
+                bg-gradient-to-r from-indigo-700 to-indigo-500
+                hover:opacity-90
+                active:scale-[0.98]
+                transition
+                text-white
+                shadow-lg shadow-indigo-500/20
+                disabled:opacity-50
+              "
+            >
+              {isSubmitting ? "Creating..." : "CREATE ACCOUNT"}
+            </button>
+
+            {/* Divider */}
+            <div className="flex items-center gap-4">
+
+              <div className="flex-1 h-px bg-slate-700" />
+
+              <span className="text-xs uppercase tracking-widest text-slate-500">
+                or continue with
+              </span>
+
+              <div className="flex-1 h-px bg-slate-700" />
+
+            </div>
+
+            {/* Social Buttons */}
+            <div className="grid grid-cols-2 gap-4">
 
               <button
                 type="button"
-                onClick={() => setShowPassword((p) => !p)}
                 className="
-                  absolute right-3 top-1/2 -translate-y-1/2
-                  text-slate-500 dark:text-slate-400
-                  hover:text-indigo-500 transition
+                  flex items-center justify-center gap-3
+                  py-3 rounded-xl
+                  border border-white/10
+                  bg-white/5
+                  hover:bg-white/10
+                  transition
+                  text-white
                 "
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                Google
               </button>
+
+              <button
+                type="button"
+                className="
+                  flex items-center justify-center gap-3
+                  py-3 rounded-xl
+                  border border-white/10
+                  bg-white/5
+                  hover:bg-white/10
+                  transition
+                  text-white
+                "
+              >
+                GitHub
+              </button>
+
             </div>
 
-            {errors.password && (
-              <p className="error">{errors.password.message}</p>
-            )}
-          </div>
+          </form>
+        </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            className="
-              w-full mt-2 py-2.5 rounded-lg
-              bg-indigo-500 text-white font-medium
-              hover:bg-indigo-600
-              active:scale-[0.98]
-              shadow-md
-              transition
-            "
-          >
-            Create Account
-          </button>
-        </form>
-
-        {/* Footer */}
-        <p className="text-sm text-center text-slate-600 dark:text-slate-400 mt-6">
+        {/* Bottom Text */}
+        <p className="mt-8 text-center text-slate-400">
           Already have an account?{" "}
-          <span className="text-indigo-500 hover:underline cursor-pointer">
+          <button className="text-indigo-300 font-semibold hover:underline">
             Login
-          </span>
+          </button>
         </p>
+
       </div>
-    </div>
+    </main>
   );
 }
